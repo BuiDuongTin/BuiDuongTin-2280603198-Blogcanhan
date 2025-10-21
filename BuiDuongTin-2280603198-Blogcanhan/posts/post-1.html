@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lập trình Socket với Java - Từ cơ bản đến nâng cao - Bùi Dương Tin</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css">
+</head>
+<body>
+    <!-- Header & Navigation -->
+    <header>
+        <div class="container">
+            <div class="logo">
+                <a href="../index.html">BDT<span>Code</span></a>
+            </div>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="../index.html">Trang chủ</a></li>
+                    <li><a href="../blog.html" class="active">Blog</a></li>
+                </ul>
+                <div class="hamburger">
+                    <div class="line"></div>
+                    <div class="line"></div>
+                    <div class="line"></div>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Post Header -->
+    <section class="post-header">
+        <div class="container">
+            <h1>Lập trình Socket với Java - Từ cơ bản đến nâng cao</h1>
+            <div class="post-meta">
+                <span><i class="far fa-calendar"></i> 15/10/2025</span>
+                <span><i class="far fa-clock"></i> 15 phút đọc</span>
+                <span><i class="far fa-folder"></i> Java, Lập trình mạng</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Post Content -->
+    <section class="post-content">
+        <div class="container">
+            <div class="post-image">
+                <img src="../images/post-1.jpg" alt="Java Socket Programming">
+            </div>
+            
+            <div class="content">
+                <h2>Giới thiệu về lập trình Socket</h2>
+                <p>
+                    Lập trình Socket là một phần quan trọng của lập trình mạng, cho phép các chương trình trên các máy tính khác nhau giao tiếp với nhau thông qua mạng. 
+                    Trong Java, chúng ta có thể sử dụng package <code>java.net</code> để làm việc với Socket.
+                </p>
+                
+                <p>
+                    Bài viết này sẽ giới thiệu về các khái niệm cơ bản của lập trình Socket, cách triển khai 
+                    ứng dụng client-server đơn giản, và một số kỹ thuật nâng cao như xử lý nhiều client, gửi/nhận 
+                    dữ liệu phức tạp và xử lý lỗi.
+                </p>
+
+                <h2>Cơ bản về Socket trong Java</h2>
+                <p>
+                    Trong Java, chúng ta có hai lớp Socket chính:
+                </p>
+                <ul>
+                    <li><strong>Socket</strong>: Sử dụng cho client để kết nối đến server</li>
+                    <li><strong>ServerSocket</strong>: Sử dụng cho server để lắng nghe các kết nối từ client</li>
+                </ul>
+                
+                <h3>Tạo một Server đơn giản</h3>
+                <p>
+                    Đầu tiên, chúng ta sẽ tạo một server đơn giản lắng nghe kết nối ở cổng 5000:
+                </p>
+                
+                <pre><code class="language-java">
+import java.io.*;
+import java.net.*;
+
+public class SimpleServer {
+    public static void main(String[] args) {
+        try {
+            ServerSocket serverSocket = new ServerSocket(5000);
+            System.out.println("Server đang lắng nghe ở cổng 5000...");
+            
+            // Chấp nhận kết nối từ client
+            Socket clientSocket = serverSocket.accept();
+            System.out.println("Đã kết nối với client!");
+            
+            // Tạo streams để gửi/nhận dữ liệu
+            PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
+            BufferedReader in = new BufferedReader(
+                new InputStreamReader(clientSocket.getInputStream())
+            );
+            
+            // Đọc dữ liệu từ client
+            String inputLine;
+            while ((inputLine = in.readLine()) != null) {
+                System.out.println("Client: " + inputLine);
+                
+                // Gửi phản hồi về client
+                out.println("Server đã nhận: " + inputLine);
+                
+                // Nếu client gửi "exit", kết thúc
+                if ("exit".equals(inputLine)) {
+                    break;
+                }
+            }
+            
+            // Đóng kết nối
+            in.close();
+            out.close();
+            clientSocket.close();
+            serverSocket.close();
+            
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}
+                </code></pre>
+                
+                <h3>Tạo Client kết nối đến Server</h3>
+                <p>
+                    Tiếp theo, chúng ta sẽ tạo một client kết nối đến server:
+                </p>
+                
+                <pre><code class="language-java">
+import java.io.*;
+import java.net.*;
+
+public class SimpleClient {
+    public static void main(String[] args) {
+        try {
+            // Kết nối đến server
+            Socket socket = new Socket("localhost", 5000);
+            
+            // Tạo streams để gửi/nhận dữ liệu
+            PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+            BufferedReader in = new BufferedReader(
+                new InputStreamReader(socket.getInputStream())
+            );
+            BufferedReader stdIn = new BufferedReader(
+                new InputStreamReader(System.in)
+            );
+            
+            String userInput;
+            System.out.println("Nhập tin nhắn gửi đến server (gõ 'exit' để thoát):");
+            
+            // Đọc input từ người dùng và gửi đến server
+            while ((userInput = stdIn.readLine()) != null) {
+                out.println(userInput);
+                
+                // Nhận phản hồi từ server
+                String serverResponse = in.readLine();
+                System.out.println("Server: " + serverResponse);
+                
+                // Nếu người dùng gõ "exit", kết thúc
+                if ("exit".equals(userInput)) {
+                    break;
+                }
+            }
+            
+            // Đóng kết nối
+            out.close();
+            in.close();
+            stdIn.close();
+            socket.close();
+            
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}
+                </code></pre>
+                
+                <h2>Xử lý nhiều Client cùng lúc</h2>
+                <p>
+                    Server trên chỉ có thể phục vụ một client tại một thời điểm. Để xử lý nhiều client cùng lúc, 
+                    chúng ta cần sử dụng multithreading:
+                </p>
+                
+                <pre><code class="language-java">
+import java.io.*;
+import java.net.*;
+
+public class MultiClientServer {
+    public static void main(String[] args) {
+        try {
+            ServerSocket serverSocket = new ServerSocket(5000);
+            System.out.println("Server đang lắng nghe ở cổng 5000...");
+            
+            while (true) {
+                // Chấp nhận kết nối từ client
+                Socket clientSocket = serverSocket.accept();
+                System.out.println("Đã kết nối với client mới!");
+                
+                // Tạo thread mới cho mỗi client
+                ClientHandler clientHandler = new ClientHandler(clientSocket);
+                new Thread(clientHandler).start();
+            }
+            
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    // Lớp xử lý kết nối với mỗi client
+    private static class ClientHandler implements Runnable {
+        private final Socket clientSocket;
+        
+        public ClientHandler(Socket socket) {
+            this.clientSocket = socket;
+        }
+        
+        @Override
+        public void run() {
+            try {
+                PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
+                BufferedReader in = new BufferedReader(
+                    new InputStreamReader(clientSocket.getInputStream())
+                );
+                
+                String inputLine;
+                while ((inputLine = in.readLine()) != null) {
+                    System.out.println("Client: " + inputLine);
+                    out.println("Server đã nhận: " + inputLine);
+                    
+                    if ("exit".equals(inputLine)) {
+                        break;
+                    }
+                }
+                
+                in.close();
+                out.close();
+                clientSocket.close();
+                System.out.println("Client đã ngắt kết nối");
+                
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+}
+                </code></pre>
+                
+                <h2>Kết luận</h2>
+                <p>
+                    Lập trình Socket với Java là một kỹ năng quan trọng cho các nhà phát triển ứng dụng mạng. 
+                    Trong bài viết này, chúng ta đã tìm hiểu:
+                </p>
+                <ul>
+                    <li>Cách tạo server và client cơ bản</li>
+                    <li>Cách gửi và nhận dữ liệu qua socket</li>
+                    <li>Cách xử lý nhiều client cùng lúc</li>
+                </ul>
+                <p>
+                    Trong các bài viết tiếp theo, chúng ta sẽ tìm hiểu về xử lý dữ liệu phức tạp, bảo mật trong lập 
+                    trình Socket, và xây dựng ứng dụng chat hoàn chỉnh sử dụng Java Socket.
+                </p>
+                
+                <div class="post-tags">
+                    <span>#Java</span>
+                    <span>#Socket</span>
+                    <span>#NetworkProgramming</span>
+                    <span>#ClientServer</span>
+                    <span>#Multithreading</span>
+                </div>
+                
+                <div class="post-navigation">
+                    <a href="../blog.html" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Quay lại danh sách bài viết</a>
+                    <a href="post-2.html" class="btn btn-primary">Bài tiếp theo <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+            
+            <div class="author-section">
+                <div class="author-avatar">
+                    <img src="../images/profile.jpg" alt="Bùi Dương Tin">
+                </div>
+                <div class="author-info">
+                    <h3>Bùi Dương Tin</h3>
+                    <p>Lập trình viên với hơn 5 năm kinh nghiệm phát triển ứng dụng Java và JavaScript. Chuyên sâu về lập trình mạng và các công nghệ web hiện đại.</p>
+                    <div class="social">
+                        <a href="#" target="_blank"><i class="fab fa-github"></i></a>
+                        <a href="#" target="_blank"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Related Posts -->
+    <section class="related-posts">
+        <div class="container">
+            <h2>Bài viết liên quan</h2>
+            <div class="posts-grid">
+                <div class="post-card">
+                    <div class="post-img">
+                        <img src="../images/post-4.jpg" alt="Java Multithreading">
+                        <div class="post-category">Java</div>
+                    </div>
+                    <div class="post-content">
+                        <h3><a href="post-4.html">Lập trình đa luồng trong Java và ứng dụng trong mạng</a></h3>
+                        <div class="post-meta">
+                            <span><i class="far fa-calendar"></i> 28/09/2025</span>
+                            <span><i class="far fa-clock"></i> 18 phút đọc</span>
+                        </div>
+                        <p>Tìm hiểu về lập trình đa luồng trong Java, synchronization, thread pools và ứng dụng trong phát triển server...</p>
+                        <a href="post-4.html" class="read-more">Đọc tiếp <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+
+                <div class="post-card">
+                    <div class="post-img">
+                        <img src="../images/post-8.jpg" alt="Java Security">
+                        <div class="post-category">Java</div>
+                    </div>
+                    <div class="post-content">
+                        <h3><a href="post-8.html">Bảo mật trong ứng dụng Java và lập trình mạng</a></h3>
+                        <div class="post-meta">
+                            <span><i class="far fa-calendar"></i> 28/08/2025</span>
+                            <span><i class="far fa-clock"></i> 22 phút đọc</span>
+                        </div>
+                        <p>Giới thiệu các kỹ thuật bảo mật trong ứng dụng Java, SSL/TLS, mã hóa dữ liệu và bảo vệ khỏi các tấn công mạng phổ biến...</p>
+                        <a href="post-8.html" class="read-more">Đọc tiếp <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <a href="../index.html">BDT<span>Code</span></a>
+                    <p>Blog chia sẻ kiến thức lập trình Java và JavaScript, hướng dẫn phát triển ứng dụng mạng.</p>
+                </div>
+                <div class="footer-links">
+                    <h3>Liên kết nhanh</h3>
+                    <ul>
+                        <li><a href="../index.html">Trang chủ</a></li>
+                        <li><a href="../blog.html">Blog</a></li>
+                    </ul>
+                </div>
+                <div class="footer-contact">
+                    <h3>Liên hệ</h3>
+                    <p><i class="fas fa-envelope"></i> info@buiduongtin.com</p>
+                    <p><i class="fas fa-phone"></i> +84 123 456 789</p>
+                    <div class="social">
+                        <a href="#" target="_blank"><i class="fab fa-github"></i></a>
+                        <a href="#" target="_blank"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" target="_blank"><i class="fab fa-facebook"></i></a>
+                        <a href="#" target="_blank"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Bùi Dương Tin. Tất cả các quyền được bảo lưu.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+    <script src="../js/main.js"></script>
+</body>
+</html>

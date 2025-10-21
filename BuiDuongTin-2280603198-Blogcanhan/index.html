@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bùi Dương Tin - Blog Lập Trình Mạng</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header & Navigation -->
+    <header>
+        <div class="container">
+            <div class="logo">
+                <a href="index.html">BDT<span>Code</span></a>
+            </div>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="index.html" class="active">Trang chủ</a></li>
+                    <li><a href="blog.html">Blog</a></li>
+                </ul>
+                <div class="hamburger">
+                    <div class="line"></div>
+                    <div class="line"></div>
+                    <div class="line"></div>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1>Blog Chia Sẻ Kiến Thức Lập Trình</h1>
+                    <h2>Java & JavaScript</h2>
+                    <p>Chào mừng bạn đến với blog của tôi! Nơi chia sẻ kinh nghiệm, kiến thức và các kỹ thuật lập trình Java & JavaScript từ cơ bản đến nâng cao.</p>
+                    <div class="hero-buttons">
+                        <a href="#about" class="btn btn-primary">Về tôi</a>
+                        <a href="blog.html" class="btn btn-secondary">Xem bài viết</a>
+                    </div>
+                </div>
+                <div class="hero-image">
+                    <img src="images/hero-image.jpg" alt="Lập trình Java và JavaScript">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about" id="about">
+        <div class="container">
+            <div class="section-header">
+                <h2>Về tôi</h2>
+                <div class="underline"></div>
+            </div>
+            <div class="about-content">
+                <div class="about-image">
+                    <img src="images/profile.jpg" alt="Bùi Dương Tin">
+                </div>
+                <div class="about-text">
+                    <h3>Bùi Dương Tin</h3>
+                    <p class="title">Lập trình viên | Giảng viên</p>
+                    <p>Tôi là một lập trình viên với hơn 5 năm kinh nghiệm trong lĩnh vực phát triển web và ứng dụng mạng. Chuyên sâu về Java, JavaScript và các công nghệ liên quan đến lập trình mạng.</p>
+                    <p>Blog này được tạo ra với mục đích chia sẻ kiến thức, kinh nghiệm và những bài học tôi đã học được trong quá trình làm việc và nghiên cứu. Tôi hy vọng những bài viết của mình sẽ giúp ích cho các bạn trong hành trình học lập trình.</p>
+                    
+                    <div class="skills">
+                        <h4>Kỹ năng chuyên môn:</h4>
+                        <ul>
+                            <li>Java Core & Java EE</li>
+                            <li>JavaScript (ES6+)</li>
+                            <li>Node.js & Express</li>
+                            <li>Spring Framework</li>
+                            <li>React.js</li>
+                            <li>RESTful API</li>
+                            <li>Network Programming</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="social">
+                        <a href="#" target="_blank"><i class="fab fa-github"></i></a>
+                        <a href="#" target="_blank"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" target="_blank"><i class="fab fa-facebook"></i></a>
+                        <a href="#" target="_blank"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Posts -->
+    <section class="featured-posts">
+        <div class="container">
+            <div class="section-header">
+                <h2>Bài viết nổi bật</h2>
+                <div class="underline"></div>
+            </div>
+            <div class="posts-grid">
+                <div class="post-card">
+                    <div class="post-img">
+                        <img src="images/post-1.jpg" alt="Java Network Programming">
+                        <div class="post-category">Java</div>
+                    </div>
+                    <div class="post-content">
+                        <h3><a href="posts/post-1.html">Lập trình Socket với Java - Từ cơ bản đến nâng cao</a></h3>
+                        <div class="post-meta">
+                            <span><i class="far fa-calendar"></i> 15/10/2025</span>
+                            <span><i class="far fa-clock"></i> 15 phút đọc</span>
+                        </div>
+                        <p>Tìm hiểu về lập trình Socket với Java, cách tạo kết nối client-server và xây dựng ứng dụng chat đơn giản...</p>
+                        <a href="posts/post-1.html" class="read-more">Đọc tiếp <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+
+                <div class="post-card">
+                    <div class="post-img">
+                        <img src="images/post-2.jpg" alt="JavaScript Asynchronous">
+                        <div class="post-category">JavaScript</div>
+                    </div>
+                    <div class="post-content">
+                        <h3><a href="posts/post-2.html">Lập trình bất đồng bộ trong JavaScript với Promise và Async/Await</a></h3>
+                        <div class="post-meta">
+                            <span><i class="far fa-calendar"></i> 10/10/2025</span>
+                            <span><i class="far fa-clock"></i> 12 phút đọc</span>
+                        </div>
+                        <p>Giải thích chi tiết về cách hoạt động của Promise, Async/Await và cách xử lý các tác vụ bất đồng bộ trong JavaScript...</p>
+                        <a href="posts/post-2.html" class="read-more">Đọc tiếp <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+
+                <div class="post-card">
+                    <div class="post-img">
+                        <img src="images/post-3.jpg" alt="RESTful API">
+                        <div class="post-category">Java</div>
+                    </div>
+                    <div class="post-content">
+                        <h3><a href="posts/post-3.html">Xây dựng RESTful API với Spring Boot</a></h3>
+                        <div class="post-meta">
+                            <span><i class="far fa-calendar"></i> 05/10/2025</span>
+                            <span><i class="far fa-clock"></i> 20 phút đọc</span>
+                        </div>
+                        <p>Hướng dẫn từng bước cách tạo RESTful API với Spring Boot, cách xử lý các request và response, validation...</p>
+                        <a href="posts/post-3.html" class="read-more">Đọc tiếp <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="center">
+                <a href="blog.html" class="btn btn-primary">Xem tất cả bài viết</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter -->
+    <section class="newsletter">
+        <div class="container">
+            <div class="newsletter-content">
+                <h2>Đăng ký nhận bài viết mới</h2>
+                <p>Đăng ký nhận thông báo khi có bài viết mới về Java, JavaScript và lập trình mạng.</p>
+                <form class="newsletter-form">
+                    <input type="email" placeholder="Email của bạn" required>
+                    <button type="submit" class="btn btn-primary">Đăng ký</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <a href="index.html">BDT<span>Code</span></a>
+                    <p>Blog chia sẻ kiến thức lập trình Java và JavaScript, hướng dẫn phát triển ứng dụng mạng.</p>
+                </div>
+                <div class="footer-links">
+                    <h3>Liên kết nhanh</h3>
+                    <ul>
+                        <li><a href="index.html">Trang chủ</a></li>
+                        <li><a href="blog.html">Blog</a></li>
+                        <li><a href="#about">Về tôi</a></li>
+                    </ul>
+                </div>
+                <div class="footer-contact">
+                    <h3>Liên hệ</h3>
+                    <p><i class="fas fa-envelope"></i> info@tinbui.kosk@gmail.com</p>
+                    <p><i class="fas fa-phone"></i> +84 123 456 111</p>
+                    <div class="social">
+                        <a href="#" target="_blank"><i class="fab fa-github"></i></a>
+                        <a href="#" target="_blank"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" target="_blank"><i class="fab fa-facebook"></i></a>
+                        <a href="#" target="_blank"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Bùi Dương Tin. Tất cả các quyền được bảo lưu.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lập trình đa luồng trong Java và ứng dụng trong mạng - Bùi Dương Tin</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css">
+</head>
+<body>
+    <!-- Header & Navigation -->
+    <header>
+        <div class="container">
+            <div class="logo">
+                <a href="../index.html">BDT<span>Code</span></a>
+            </div>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="../index.html">Trang chủ</a></li>
+                    <li><a href="../blog.html" class="active">Blog</a></li>
+                </ul>
+                <div class="hamburger">
+                    <div class="line"></div>
+                    <div class="line"></div>
+                    <div class="line"></div>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Post Header -->
+    <section class="post-header">
+        <div class="container">
+            <h1>Lập trình đa luồng trong Java và ứng dụng trong mạng</h1>
+            <div class="post-meta">
+                <span><i class="far fa-calendar"></i> 28/09/2025</span>
+                <span><i class="far fa-clock"></i> 18 phút đọc</span>
+                <span><i class="far fa-folder"></i> Java, Lập trình mạng</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Post Content -->
+    <section class="post-content">
+        <div class="container">
+            <div class="post-image">
+                <img src="../images/post-4.jpg" alt="Java Multithreading">
+            </div>
+            
+            <div class="content">
+                <h2>Giới thiệu về lập trình đa luồng</h2>
+                <p>
+                    Lập trình đa luồng (multithreading) là một kỹ thuật lập trình cho phép một chương trình thực hiện nhiều công việc 
+                    đồng thời trong cùng một tiến trình. Mỗi luồng (thread) có thể thực hiện các tác vụ độc lập với nhau, giúp tận 
+                    dụng tối đa tài nguyên của hệ thống và tăng hiệu suất của ứng dụng.
+                </p>
+                
+                <p>
+                    Trong Java, lập trình đa luồng được hỗ trợ natively thông qua các lớp và giao diện như <code>Thread</code>, <code>Runnable</code>, 
+                    <code>Executor</code>, <code>Future</code> và <code>CompletableFuture</code>. Đặc biệt, trong lập trình mạng, kỹ thuật này 
+                    rất quan trọng để xây dựng các ứng dụng có thể xử lý nhiều yêu cầu cùng một lúc.
+                </p>
+
+                <h2>Cơ bản về Thread trong Java</h2>
+                <h3>Tạo và khởi động Thread</h3>
+                <p>
+                    Trong Java, có hai cách chính để tạo một thread:
+                </p>
+                
+                <p>
+                    <strong>Cách 1: Kế thừa từ lớp Thread</strong>
+                </p>
+                <pre><code class="language-java">
+public class MyThread extends Thread {
+    @Override
+    public void run() {
+        System.out.println("Thread đang chạy: " + Thread.currentThread().getName());
+        // Code thực thi khi thread chạy
+        for (int i = 0; i < 5; i++) {
+            System.out.println(i);
+            try {
+                Thread.sleep(1000); // Tạm dừng 1 giây
+            } catch (InterruptedException e) {
+                System.out.println("Thread bị gián đoạn");
+                return;
+            }
+        }
+    }
+    
+    public static void main(String[] args) {
+        MyThread thread = new MyThread();
+        thread.start(); // Bắt đầu chạy thread
+        
+        System.out.println("Thread chính tiếp tục thực thi");
+    }
+}
+                </code></pre>
+                
+                <p>
+                    <strong>Cách 2: Triển khai interface Runnable (Khuyến nghị)</strong>
+                </p>
+                <pre><code class="language-java">
+public class MyRunnable implements Runnable {
+    @Override
+    public void run() {
+        System.out.println("Thread đang chạy: " + Thread.currentThread().getName());
+        // Code thực thi khi thread chạy
+        for (int i = 0; i < 5; i++) {
+            System.out.println(i);
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                System.out.println("Thread bị gián đoạn");
+                return;
+            }
+        }
+    }
+    
+    public static void main(String[] args) {
+        Thread thread = new Thread(new MyRunnable(), "MyRunnable");
+        thread.start();
+        
+        System.out.println("Thread chính tiếp tục thực thi");
+    }
+}
+                </code></pre>
+                
+                <p>
+                    Cách thứ hai (sử dụng Runnable) thường được ưa chuộng hơn vì nó cho phép tách biệt nhiệm vụ khỏi cách thức 
+                    thực thi và Java không hỗ trợ đa kế thừa lớp nhưng có thể triển khai nhiều interface.
+                </p>
+                
+                <h3>Trạng thái của Thread</h3>
+                <p>
+                    Một thread trong Java có các trạng thái sau:
+                </p>
+                <ul>
+                    <li><strong>NEW</strong>: Thread được tạo nhưng chưa gọi start()</li>
+                    <li><strong>RUNNABLE</strong>: Thread đang chạy hoặc sẵn sàng chạy</li>
+                    <li><strong>BLOCKED</strong>: Thread đang chờ một monitor lock</li>
+                    <li><strong>WAITING</strong>: Thread đang chờ một thread khác thực hiện một hành động cụ thể</li>
+                    <li><strong>TIMED_WAITING</strong>: Thread đang chờ trong một khoảng thời gian xác định</li>
+                    <li><strong>TERMINATED</strong>: Thread đã kết thúc thực thi</li>
+                </ul>
+                
+                <pre><code class="language-java">
+Thread thread = new Thread(() -> {
+    // Code thực thi
+});
+
+System.out.println(thread.getState()); // NEW
+
+thread.start();
+System.out.println(thread.getState()); // RUNNABLE
+
+// Sau khi thread kết thúc
+System.out.println(thread.getState()); // TERMINATED
+                </code></pre>
+                
+                <h2>Đồng bộ hóa trong Java (Synchronization)</h2>
+                <p>
+                    Khi nhiều thread cùng truy cập và thay đổi dữ liệu chia sẻ, có thể xảy ra tình trạng race condition.
+                    Java cung cấp từ khóa <code>synchronized</code> để giải quyết vấn đề này:
+                </p>
+                
+                <pre><code class="language-java">
+public class Counter {
+    private int count = 0;
+    
+    // Phương thức đồng bộ
+    public synchronized void increment() {
+        count++;
+    }
+    
+    public synchronized int getCount() {
+        return count;
+    }
+    
+    // Hoặc sử dụng khối đồng bộ
+    public void incrementWithBlock() {
+        synchronized(this) {
+            count++;
+        }
+    }
+}
+                </code></pre>
+                
+                <h3>Các vấn đề đồng bộ hóa thường gặp</h3>
+                <p>
+                    <strong>1. Race Condition:</strong> Xảy ra khi nhiều thread cùng truy cập và thay đổi dữ liệu chia sẻ.
+                </p>
+                <pre><code class="language-java">
+// Không an toàn với đa luồng
+public class BankAccount {
+    private double balance;
+    
+    public BankAccount(double initialBalance) {
+        this.balance = initialBalance;
+    }
+    
+    // Có thể xảy ra race condition
+    public void deposit(double amount) {
+        balance += amount;
+    }
+    
+    // Có thể xảy ra race condition
+    public void withdraw(double amount) {
+        if (balance >= amount) {
+            balance -= amount;
+        }
+    }
+}
+                </code></pre>
+                
+                <p>
+                    <strong>2. Deadlock:</strong> Xảy ra khi hai hay nhiều thread chờ đợi lẫn nhau.
+                </p>
+                <pre><code class="language-java">
+public class DeadlockExample {
+    private final Object lock1 = new Object();
+    private final Object lock2 = new Object();
+    
+    public void method1() {
+        synchronized(lock1) {
+            System.out.println("Method 1: Holding lock1...");
+            try { Thread.sleep(100); } catch (InterruptedException e) {}
+            System.out.println("Method 1: Waiting for lock2...");
+            
+            synchronized(lock2) {
+                System.out.println("Method 1: Holding lock1 & lock2");
+            }
+        }
+    }
+    
+    public void method2() {
+        synchronized(lock2) {
+            System.out.println("Method 2: Holding lock2...");
+            try { Thread.sleep(100); } catch (InterruptedException e) {}
+            System.out.println("Method 2: Waiting for lock1...");
+            
+            synchronized(lock1) {
+                System.out.println("Method 2: Holding lock1 & lock2");
+            }
+        }
+    }
+    
+    public static void main(String[] args) {
+        DeadlockExample deadlock = new DeadlockExample();
+        
+        new Thread(() -> {
+            deadlock.method1();
+        }).start();
+        
+        new Thread(() -> {
+            deadlock.method2();
+        }).start();
+    }
+}
+                </code></pre>
+                
+                <h2>Concurrent Collections</h2>
+                <p>
+                    Java cung cấp nhiều cấu trúc dữ liệu an toàn cho đa luồng trong package <code>java.util.concurrent</code>:
+                </p>
+                <ul>
+                    <li><code>ConcurrentHashMap</code>: Phiên bản thread-safe của HashMap</li>
+                    <li><code>CopyOnWriteArrayList</code>: Phiên bản thread-safe của ArrayList</li>
+                    <li><code>BlockingQueue</code>: Giao diện Queue hỗ trợ các thao tác chặn</li>
+                    <li><code>ConcurrentLinkedQueue</code>: Hàng đợi không chặn thread-safe</li>
+                </ul>
+                
+                <pre><code class="language-java">
+import java.util.concurrent.*;
+
+public class ConcurrentCollectionsExample {
+    public static void main(String[] args) {
+        // ConcurrentHashMap
+        ConcurrentHashMap<String, Integer> map = new ConcurrentHashMap<>();
+        map.put("one", 1);
+        map.put("two", 2);
+        
+        // CopyOnWriteArrayList
+        CopyOnWriteArrayList<String> list = new CopyOnWriteArrayList<>();
+        list.add("Item 1");
+        list.add("Item 2");
+        
+        // BlockingQueue
+        BlockingQueue<String> queue = new ArrayBlockingQueue<>(10);
+        try {
+            queue.put("Task 1");
+            String task = queue.take(); // Lấy và xóa phần tử đầu tiên
+            System.out.println(task);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+    }
+}
+                </code></pre>
+                
+                <h2>Executor Framework</h2>
+                <p>
+                    Executor Framework cung cấp một cách tiếp cận cấp cao hơn để làm việc với thread, giúp tách biệt giữa việc 
+                    định nghĩa nhiệm vụ và cách thức thực thi chúng.
+                </p>
+                
+                <pre><code class="language-java">
+import java.util.concurrent.*;
+
+public class ExecutorExample {
+    public static void main(String[] args) {
+        // Single thread executor
+        ExecutorService singleExecutor = Executors.newSingleThreadExecutor();
+        
+        // Fixed thread pool
+        ExecutorService fixedExecutor = Executors.newFixedThreadPool(5);
+        
+        // Cached thread pool
+        ExecutorService cachedExecutor = Executors.newCachedThreadPool();
+        
+        // Scheduled thread pool
+        ScheduledExecutorService scheduledExecutor = Executors.newScheduledThreadPool(3);
+        
+        // Submit task to executor
+        fixedExecutor.submit(() -> {
+            System.out.println("Task executing in thread: " + Thread.currentThread().getName());
+        });
+        
+        // Schedule task to run after delay
+        scheduledExecutor.schedule(() -> {
+            System.out.println("Scheduled task after 5 seconds");
+        }, 5, TimeUnit.SECONDS);
+        
+        // Schedule task to run periodically
+        scheduledExecutor.scheduleAtFixedRate(() -> {
+            System.out.println("Periodic task every 2 seconds");
+        }, 0, 2, TimeUnit.SECONDS);
+        
+        // Remember to shutdown executors
+        // fixedExecutor.shutdown();
+        // scheduledExecutor.shutdown();
+    }
+}
+                </code></pre>
+                
+                <h3>Future và CompletableFuture</h3>
+                <p>
+                    <code>Future</code> cho phép kiểm tra kết quả của một nhiệm vụ bất đồng bộ, trong khi <code>CompletableFuture</code> 
+                    (Java 8+) cung cấp các tính năng nâng cao hơn cho lập trình bất đồng bộ.
+                </p>
+                
+                <pre><code class="language-java">
+import java.util.concurrent.*;
+
+public class FutureExample {
+    public static void main(String[] args) throws Exception {
+        ExecutorService executor = Executors.newFixedThreadPool(2);
+        
+        // Sử dụng Future
+        Future<Integer> future = executor.submit(() -> {
+            Thread.sleep(2000); // Mô phỏng tác vụ nặng
+            return 42;
+        });
+        
+        // Kiểm tra kết quả
+        System.out.println("Future is done? " + future.isDone());
+        
+        // Lấy kết quả (chặn cho đến khi hoàn thành)
+        Integer result = future.get();
+        System.out.println("Result: " + result);
+        
+        // Sử dụng CompletableFuture
+        CompletableFuture<String> cf = CompletableFuture.supplyAsync(() -> {
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
+            return "Hello";
+        }, executor).thenApply(s -> {
+            return s + " World";
+        }).thenApply(s -> {
+            return s + "!";
+        });
+        
+        System.out.println(cf.get()); // Hello World!
+        
+        executor.shutdown();
+    }
+}
+                </code></pre>
+                
+                <h2>Thread Pools</h2>
+                <p>
+                    Thread pool là một tập hợp các worker thread đợi để thực hiện nhiệm vụ. Sử dụng thread pool giúp giảm thiểu 
+                    chi phí tạo và hủy thread liên tục.
+                </p>
+                
+                <pre><code class="language-java">
+import java.util.concurrent.*;
+
+public class ThreadPoolExample {
+    public static void main(String[] args) {
+        // Tạo thread pool với 5 thread
+        ExecutorService executor = Executors.newFixedThreadPool(5);
+        
+        // Submit 10 tasks to the pool
+        for (int i = 0; i < 10; i++) {
+            final int taskId = i;
+            executor.submit(() -> {
+                System.out.println("Task " + taskId + " is running in thread: " + Thread.currentThread().getName());
+                try {
+                    // Mô phỏng công việc
+                    Thread.sleep(500);
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                }
+                System.out.println("Task " + taskId + " completed");
+            });
+        }
+        
+        // Shutdown executor khi hoàn thành
+        executor.shutdown();
+        try {
+            // Đợi tất cả tasks hoàn thành hoặc timeout
+            if (!executor.awaitTermination(60, TimeUnit.SECONDS)) {
+                executor.shutdownNow();
+            }
+        } catch (InterruptedException e) {
+            executor.shutdownNow();
+            Thread.currentThread().interrupt();
+        }
+    }
+}
+                </code></pre>
+                
+                <h2>Ứng dụng đa luồng trong lập trình mạng</h2>
+                <p>
+                    Đa luồng đóng vai trò quan trọng trong lập trình mạng, đặc biệt là khi xây dựng ứng dụng client-server có thể xử lý 
+                    nhiều kết nối đồng thời.
+                </p>
+                
+                <h3>Server đa luồng với Socket</h3>
+                <p>
+                    Dưới đây là một ví dụ về server đa luồng đơn giản có thể xử lý nhiều client cùng lúc:
+                </p>
+                
+                <pre><code class="language-java">
+import java.io.*;
+import java.net.*;
+import java.util.concurrent.*;
+
+public class MultithreadedServer {
+    private static final int PORT = 8080;
+    
+    public static void main(String[] args) {
+        // Tạo thread pool cho server
+        ExecutorService executor = Executors.newFixedThreadPool(10);
+        
+        try (ServerSocket serverSocket = new ServerSocket(PORT)) {
+            System.out.println("Server đang lắng nghe trên port " + PORT);
+            
+            while (true) {
+                try {
+                    // Chấp nhận kết nối từ client
+                    Socket clientSocket = serverSocket.accept();
+                    System.out.println("Client đã kết nối: " + clientSocket.getInetAddress());
+                    
+                    // Xử lý client trong thread pool
+                    executor.submit(new ClientHandler(clientSocket));
+                } catch (IOException e) {
+                    System.err.println("Lỗi khi chấp nhận kết nối: " + e.getMessage());
+                }
+            }
+        } catch (IOException e) {
+            System.err.println("Lỗi khởi tạo server: " + e.getMessage());
+            executor.shutdown();
+        }
+    }
+    
+    // Lớp xử lý client
+    private static class ClientHandler implements Runnable {
+        private final Socket clientSocket;
+        
+        public ClientHandler(Socket socket) {
+            this.clientSocket = socket;
+        }
+        
+        @Override
+        public void run() {
+            try (
+                BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+                PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true)
+            ) {
+                String inputLine;
+                while ((inputLine = in.readLine()) != null) {
+                    System.out.println("Nhận từ client: " + inputLine);
+                    
+                    // Xử lý và gửi phản hồi
+                    out.println("Server đã nhận: " + inputLine);
+                    
+                    if ("exit".equalsIgnoreCase(inputLine)) {
+                        break;
+                    }
+                }
+                
+                System.out.println("Client ngắt kết nối: " + clientSocket.getInetAddress());
+            } catch (IOException e) {
+                System.err.println("Lỗi xử lý client: " + e.getMessage());
+            } finally {
+                try {
+                    clientSocket.close();
+                } catch (IOException e) {
+                    System.err.println("Lỗi đóng socket: " + e.getMessage());
+                }
+            }
+        }
+    }
+}
+                </code></pre>
+                
+                <h3>Non-blocking IO với NIO</h3>
+                <p>
+                    Java NIO (New IO) cung cấp các API cho non-blocking IO, giúp server có thể xử lý nhiều kết nối mạng mà không cần 
+                    tạo thread cho mỗi kết nối:
+                </p>
+                
+                <pre><code class="language-java">
+import java.io.IOException;
+import java.net.InetSocketAddress;
+import java.nio.ByteBuffer;
+import java.nio.channels.*;
+import java.util.*;
+
+public class NioServer {
+    private static final int PORT = 8080;
+    
+    public static void main(String[] args) throws IOException {
+        // Tạo selector
+        Selector selector = Selector.open();
+        
+        // Tạo server channel
+        ServerSocketChannel serverChannel = ServerSocketChannel.open();
+        serverChannel.socket().bind(new InetSocketAddress(PORT));
+        serverChannel.configureBlocking(false);
+        
+        // Đăng ký channel với selector, để ý các sự kiện kết nối
+        serverChannel.register(selector, SelectionKey.OP_ACCEPT);
+        System.out.println("Server đang lắng nghe trên port " + PORT);
+        
+        ByteBuffer buffer = ByteBuffer.allocate(256);
+        
+        while (true) {
+            // Chờ cho đến khi có sự kiện
+            selector.select();
+            
+            // Lấy các sự kiện từ selector
+            Set<SelectionKey> selectedKeys = selector.selectedKeys();
+            Iterator<SelectionKey> iter = selectedKeys.iterator();
+            
+            while (iter.hasNext()) {
+                SelectionKey key = iter.next();
+                iter.remove();
+                
+                if (!key.isValid()) {
+                    continue;
+                }
+                
+                if (key.isAcceptable()) {
+                    // Chấp nhận kết nối mới
+                    registerNewClient(selector, serverChannel);
+                } else if (key.isReadable()) {
+                    // Đọc dữ liệu từ client
+                    readFromClient(key, buffer);
+                }
+            }
+        }
+    }
+    
+    private static void registerNewClient(Selector selector, ServerSocketChannel serverChannel) throws IOException {
+        // Chấp nhận kết nối
+        SocketChannel client = serverChannel.accept();
+        client.configureBlocking(false);
+        
+        // Đăng ký client để theo dõi sự kiện đọc
+        client.register(selector, SelectionKey.OP_READ);
+        System.out.println("Client đã kết nối: " + client.getRemoteAddress());
+    }
+    
+    private static void readFromClient(SelectionKey key, ByteBuffer buffer) throws IOException {
+        SocketChannel client = (SocketChannel) key.channel();
+        buffer.clear();
+        
+        try {
+            int bytesRead = client.read(buffer);
+            
+            if (bytesRead == -1) {
+                // Kết nối đã đóng
+                client.close();
+                key.cancel();
+                System.out.println("Client đã ngắt kết nối");
+                return;
+            }
+            
+            buffer.flip();
+            byte[] bytes = new byte[buffer.limit()];
+            buffer.get(bytes);
+            String message = new String(bytes).trim();
+            
+            System.out.println("Nhận từ client: " + message);
+            
+            // Gửi phản hồi
+            buffer.clear();
+            buffer.put(("Server đã nhận: " + message).getBytes());
+            buffer.flip();
+            client.write(buffer);
+            
+        } catch (IOException e) {
+            client.close();
+            key.cancel();
+            System.out.println("Lỗi đọc từ client: " + e.getMessage());
+        }
+    }
+}
+                </code></pre>
+                
+                <h3>Sử dụng ThreadPool với NIO</h3>
+                <p>
+                    Để kết hợp lợi thế của NIO và đa luồng, chúng ta có thể sử dụng thread pool để xử lý dữ liệu sau khi đọc từ channel:
+                </p>
+                
+                <pre><code class="language-java">
+import java.io.IOException;
+import java.net.InetSocketAddress;
+import java.nio.ByteBuffer;
+import java.nio.channels.*;
+import java.util.*;
+import java.util.concurrent.*;
+
+public class NioThreadPoolServer {
+    private static final int PORT = 8080;
+    
+    public static void main(String[] args) throws IOException {
+        // Thread pool để xử lý dữ liệu
+        ExecutorService pool = Executors.newFixedThreadPool(10);
+        
+        try (Selector selector = Selector.open();
+             ServerSocketChannel serverChannel = ServerSocketChannel.open()) {
+            
+            serverChannel.socket().bind(new InetSocketAddress(PORT));
+            serverChannel.configureBlocking(false);
+            serverChannel.register(selector, SelectionKey.OP_ACCEPT);
+            
+            System.out.println("Server đang lắng nghe trên port " + PORT);
+            
+            while (true) {
+                selector.select();
+                
+                Set<SelectionKey> selectedKeys = selector.selectedKeys();
+                Iterator<SelectionKey> iter = selectedKeys.iterator();
+                
+                while (iter.hasNext()) {
+                    SelectionKey key = iter.next();
+                    iter.remove();
+                    
+                    if (!key.isValid()) {
+                        continue;
+                    }
+                    
+                    if (key.isAcceptable()) {
+                        // Chấp nhận kết nối mới
+                        ServerSocketChannel server = (ServerSocketChannel) key.channel();
+                        SocketChannel client = server.accept();
+                        client.configureBlocking(false);
+                        client.register(selector, SelectionKey.OP_READ);
+                        System.out.println("Client đã kết nối: " + client.getRemoteAddress());
+                    } else if (key.isReadable()) {
+                        // Gửi công việc đọc cho thread pool
+                        pool.submit(() -> {
+                            processRead(key);
+                            return null;
+                        });
+                    }
+                }
+            }
+        } catch (IOException e) {
+            System.err.println("Lỗi: " + e.getMessage());
+        } finally {
+            pool.shutdown();
+        }
+    }
+    
+    private static void processRead(SelectionKey key) {
+        SocketChannel client = (SocketChannel) key.channel();
+        ByteBuffer buffer = ByteBuffer.allocate(1024);
+        
+        try {
+            int bytesRead = client.read(buffer);
+            
+            if (bytesRead == -1) {
+                client.close();
+                key.cancel();
+                System.out.println("Client đã ngắt kết nối");
+                return;
+            }
+            
+            buffer.flip();
+            byte[] data = new byte[buffer.remaining()];
+            buffer.get(data);
+            String message = new String(data).trim();
+            
+            // Xử lý dữ liệu (có thể tốn nhiều thời gian)
+            System.out.println("Đang xử lý: " + message);
+            // Mô phỏng xử lý nặng
+            Thread.sleep(100);
+            
+            // Gửi phản hồi
+            String response = "Server đã xử lý: " + message;
+            ByteBuffer responseBuffer = ByteBuffer.wrap(response.getBytes());
+            
+            client.write(responseBuffer);
+            
+        } catch (IOException e) {
+            try {
+                client.close();
+                key.cancel();
+            } catch (IOException ex) {
+                // Ignore
+            }
+            System.out.println("Lỗi đọc từ client: " + e.getMessage());
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+    }
+}
+                </code></pre>
+                
+                <h2>Kết luận</h2>
+                <p>
+                    Lập trình đa luồng là một kỹ thuật quan trọng trong phát triển ứng dụng Java, đặc biệt trong lĩnh vực lập trình mạng. 
+                    Các ứng dụng mạng hiện đại thường phải xử lý nhiều kết nối đồng thời, và việc áp dụng đa luồng giúp tận dụng tối đa 
+                    tài nguyên hệ thống và cải thiện hiệu suất.
+                </p>
+                
+                <p>
+                    Trong bài viết này, chúng ta đã tìm hiểu về:
+                </p>
+                <ul>
+                    <li>Cơ bản về Thread và Runnable trong Java</li>
+                    <li>Đồng bộ hóa và các vấn đề thường gặp</li>
+                    <li>Concurrent Collections và Thread-safe</li>
+                    <li>Executor Framework và Thread Pools</li>
+                    <li>Ứng dụng đa luồng trong lập trình mạng</li>
+                    <li>Non-blocking IO với NIO</li>
+                </ul>
+                
+                <p>
+                    Việc áp dụng đúng kỹ thuật đa luồng giúp xây dựng các ứng dụng mạng có hiệu suất cao, đáng tin cậy và dễ mở rộng.
+                    Tuy nhiên, lập trình đa luồng cũng đi kèm với nhiều thách thức và phức tạp, do đó cần được áp dụng một cách cẩn thận 
+                    và có hiểu biết sâu rộng.
+                </p>
+                
+                <div class="post-tags">
+                    <span>#Java</span>
+                    <span>#Multithreading</span>
+                    <span>#NetworkProgramming</span>
+                    <span>#ConcurrentProgramming</span>
+                    <span>#ThreadPool</span>
+                </div>
+                
+                <div class="post-navigation">
+                    <a href="post-3.html" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Bài trước</a>
+                    <a href="post-5.html" class="btn btn-primary">Bài tiếp theo <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+            
+            <div class="author-section">
+                <div class="author-avatar">
+                    <img src="../images/profile.jpg" alt="Bùi Dương Tin">
+                </div>
+                <div class="author-info">
+                    <h3>Bùi Dương Tin</h3>
+                    <p>Lập trình viên với hơn 5 năm kinh nghiệm phát triển ứng dụng Java và JavaScript. Chuyên sâu về lập trình mạng và các công nghệ web hiện đại.</p>
+                    <div class="social">
+                        <a href="#" target="_blank"><i class="fab fa-github"></i></a>
+                        <a href="#" target="_blank"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Related Posts -->
+    <section class="related-posts">
+        <div class="container">
+            <h2>Bài viết liên quan</h2>
+            <div class="posts-grid">
+                <div class="post-card">
+                    <div class="post-img">
+                        <img src="../images/post-1.jpg" alt="Java Socket Programming">
+                        <div class="post-category">Java</div>
+                    </div>
+                    <div class="post-content">
+                        <h3><a href="post-1.html">Lập trình Socket với Java - Từ cơ bản đến nâng cao</a></h3>
+                        <div class="post-meta">
+                            <span><i class="far fa-calendar"></i> 15/10/2025</span>
+                            <span><i class="far fa-clock"></i> 15 phút đọc</span>
+                        </div>
+                        <p>Tìm hiểu về lập trình Socket với Java, cách tạo kết nối client-server và xây dựng ứng dụng chat đơn giản...</p>
+                        <a href="post-1.html" class="read-more">Đọc tiếp <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+
+                <div class="post-card">
+                    <div class="post-img">
+                        <img src="../images/post-5.jpg" alt="WebSockets">
+                        <div class="post-category">JavaScript</div>
+                    </div>
+                    <div class="post-content">
+                        <h3><a href="post-5.html">Tạo ứng dụng real-time với WebSocket và Node.js</a></h3>
+                        <div class="post-meta">
+                            <span><i class="far fa-calendar"></i> 20/09/2025</span>
+                            <span><i class="far fa-clock"></i> 15 phút đọc</span>
+                        </div>
+                        <p>Hướng dẫn xây dựng ứng dụng real-time với WebSocket, Socket.io và Node.js, tạo chat room và thông báo trực tiếp...</p>
+                        <a href="post-5.html" class="read-more">Đọc tiếp <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <a href="../index.html">BDT<span>Code</span></a>
+                    <p>Blog chia sẻ kiến thức lập trình Java và JavaScript, hướng dẫn phát triển ứng dụng mạng.</p>
+                </div>
+                <div class="footer-links">
+                    <h3>Liên kết nhanh</h3>
+                    <ul>
+                        <li><a href="../index.html">Trang chủ</a></li>
+                        <li><a href="../blog.html">Blog</a></li>
+                    </ul>
+                </div>
+                <div class="footer-contact">
+                    <h3>Liên hệ</h3>
+                    <p><i class="fas fa-envelope"></i> info@buiduongtin.com</p>
+                    <p><i class="fas fa-phone"></i> +84 123 456 789</p>
+                    <div class="social">
+                        <a href="#" target="_blank"><i class="fab fa-github"></i></a>
+                        <a href="#" target="_blank"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" target="_blank"><i class="fab fa-facebook"></i></a>
+                        <a href="#" target="_blank"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Bùi Dương Tin. Tất cả các quyền được bảo lưu.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+    <script src="../js/main.js"></script>
+</body>
+</html>
