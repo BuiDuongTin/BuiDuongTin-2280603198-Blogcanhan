@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>So sánh các framework JavaScript: React, Vue và Angular - Bùi Dương Tin</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css">
+</head>
+<body>
+    <!-- Header & Navigation -->
+    <header>
+        <div class="container">
+            <div class="logo">
+                <a href="../index.html">BDT<span>Code</span></a>
+            </div>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="../index.html">Trang chủ</a></li>
+                    <li><a href="../blog.html" class="active">Blog</a></li>
+                </ul>
+                <div class="hamburger">
+                    <div class="line"></div>
+                    <div class="line"></div>
+                    <div class="line"></div>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Post Header -->
+    <section class="post-header">
+        <div class="container">
+            <h1>So sánh các framework JavaScript: React, Vue và Angular</h1>
+            <div class="post-meta">
+                <span><i class="far fa-calendar"></i> 05/09/2025</span>
+                <span><i class="far fa-clock"></i> 16 phút đọc</span>
+                <span><i class="far fa-folder"></i> JavaScript</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Post Content -->
+    <section class="post-content">
+        <div class="container">
+            <div class="post-image">
+                <img src="../images/post-7.jpg" alt="JavaScript Frameworks Comparison">
+            </div>
+            
+            <div class="content">
+                <h2>Giới thiệu về các JavaScript framework hiện đại</h2>
+                <p>
+                    Trong thế giới phát triển web hiện đại, việc chọn một JavaScript framework phù hợp là một quyết định quan trọng 
+                    cho bất kỳ dự án nào. React, Vue và Angular là ba framework/thư viện phổ biến nhất hiện nay, mỗi loại đều có 
+                    điểm mạnh và yếu riêng.
+                </p>
+                
+                <p>
+                    Bài viết này sẽ phân tích chi tiết và so sánh khách quan giữa React, Vue và Angular dựa trên nhiều khía cạnh 
+                    như kiến trúc, hiệu suất, độ phức tạp khi học, sự linh hoạt, và hệ sinh thái. Mục tiêu là giúp bạn có cái nhìn 
+                    tổng quan để chọn công cụ phù hợp nhất cho dự án tiếp theo của mình.
+                </p>
+
+                <h2>Tổng quan về React, Vue và Angular</h2>
+                
+                <h3>React</h3>
+                <p>
+                    React là một thư viện JavaScript do Facebook phát triển và ra mắt vào năm 2013. React không phải là một framework 
+                    đầy đủ mà là một thư viện tập trung vào việc xây dựng giao diện người dùng (UI) thông qua các component có thể 
+                    tái sử dụng.
+                </p>
+                <ul>
+                    <li><strong>Tính chất:</strong> Declarative, Component-based</li>
+                    <li><strong>Mô hình dữ liệu:</strong> Một chiều (One-way data binding)</li>
+                    <li><strong>Virtual DOM:</strong> Sử dụng để tối ưu hóa rendering</li>
+                    <li><strong>JSX:</strong> Mở rộng cú pháp JavaScript cho phép viết cấu trúc UI dạng HTML trong code JavaScript</li>
+                </ul>
+                
+                <h3>Vue</h3>
+                <p>
+                    Vue.js là một framework tiến bộ cho việc xây dựng giao diện người dùng, được phát triển bởi Evan You (cựu nhân viên của 
+                    Google) vào năm 2014. Vue được thiết kế để "được áp dụng từng phần" (incrementally adoptable).
+                </p>
+                <ul>
+                    <li><strong>Tính chất:</strong> Progressive, Approachable</li>
+                    <li><strong>Mô hình dữ liệu:</strong> Hai chiều (Two-way data binding) cho form inputs, một chiều cho components</li>
+                    <li><strong>Cú pháp template:</strong> Dựa trên HTML với các directive đặc biệt</li>
+                    <li><strong>Single-File Components:</strong> Kết hợp HTML, CSS và JavaScript trong một file .vue</li>
+                </ul>
+                
+                <h3>Angular</h3>
+                <p>
+                    Angular là một platform và framework phát triển bởi Google, là phiên bản viết lại hoàn toàn của AngularJS. Angular 
+                    (từ version 2 trở đi) được ra mắt vào năm 2016 và đã trải qua nhiều bản cập nhật quan trọng.
+                </p>
+                <ul>
+                    <li><strong>Tính chất:</strong> Platform, Full-featured framework</li>
+                    <li><strong>Ngôn ngữ chính:</strong> TypeScript</li>
+                    <li><strong>Mô hình dữ liệu:</strong> Hai chiều (Two-way data binding)</li>
+                    <li><strong>Dependency Injection:</strong> Hệ thống DI tích hợp sẵn</li>
+                    <li><strong>RxJS:</strong> Sử dụng Observables để xử lý dữ liệu bất đồng bộ</li>
+                </ul>
+                
+                <h2>So sánh kiến trúc và mô hình lập trình</h2>
+                
+                <h3>React</h3>
+                <p>
+                    React sử dụng mô hình component dựa trên JavaScript, nơi logic và giao diện được kết hợp chặt chẽ:
+                </p>
+                <pre><code class="language-jsx">
+import React, { useState } from 'react';
+
+function Counter() {
+  const [count, setCount] = useState(0);
+
+  return (
+    &lt;div&gt;
+      &lt;p&gt;Bạn đã click {count} lần&lt;/p&gt;
+      &lt;button onClick={() => setCount(count + 1)}&gt;
+        Click vào đây
+      &lt;/button&gt;
+    &lt;/div&gt;
+  );
+}
+
+export default Counter;
+                </code></pre>
+                <p>
+                    React sử dụng một dòng dữ liệu một chiều thông qua props, và quản lý state nội bộ bằng hooks (như useState) 
+                    hoặc class components. Context API và Redux là các giải pháp phổ biến cho quản lý state toàn cục.
+                </p>
+                
+                <h3>Vue</h3>
+                <p>
+                    Vue sử dụng Single-File Components kết hợp template, script và style:
+                </p>
+                <pre><code class="language-html">
+&lt;template&gt;
+  &lt;div&gt;
+    &lt;p&gt;Bạn đã click {{ count }} lần&lt;/p&gt;
+    &lt;button @click="increment"&gt;Click vào đây&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+export default {
+  data() {
+    return {
+      count: 0
+    }
+  },
+  methods: {
+    increment() {
+      this.count++
+    }
+  }
+}
+&lt;/script&gt;
+
+&lt;style scoped&gt;
+button {
+  padding: 5px 10px;
+  background: #42b983;
+  color: white;
+}
+&lt;/style&gt;
+                </code></pre>
+                <p>
+                    Vue cung cấp Composition API (từ Vue 3) làm cho code có thể tái sử dụng tốt hơn, tương tự như hooks trong React:
+                </p>
+                <pre><code class="language-javascript">
+import { ref } from 'vue';
+
+export default {
+  setup() {
+    const count = ref(0);
+    
+    function increment() {
+      count.value++;
+    }
+    
+    return {
+      count,
+      increment
+    };
+  }
+};
+                </code></pre>
+                
+                <h3>Angular</h3>
+                <p>
+                    Angular sử dụng kiến trúc module-component-service với TypeScript:
+                </p>
+                <pre><code class="language-typescript">
+// counter.component.ts
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-counter',
+  template: `
+    &lt;div&gt;
+      &lt;p&gt;Bạn đã click {{ count }} lần&lt;/p&gt;
+      &lt;button (click)="increment()"&gt;Click vào đây&lt;/button&gt;
+    &lt;/div&gt;
+  `,
+  styles: [`
+    button {
+      padding: 5px 10px;
+      background: #1976d2;
+      color: white;
+    }
+  `]
+})
+export class CounterComponent {
+  count = 0;
+  
+  increment() {
+    this.count++;
+  }
+}
+                </code></pre>
+                <p>
+                    Angular sử dụng dependency injection để quản lý service và khuyến khích phân chia rõ ràng giữa dữ liệu (services), 
+                    logic (components) và giao diện (templates).
+                </p>
+                
+                <h2>So sánh hiệu suất</h2>
+                
+                <p>
+                    Hiệu suất là yếu tố quan trọng khi chọn framework JavaScript. Dưới đây là so sánh về các khía cạnh hiệu suất chính:
+                </p>
+                
+                <h3>Kích thước bundle</h3>
+                <table border="1" style="width:100%; border-collapse: collapse; margin: 20px 0;">
+                    <tr style="background-color: #f8f9fa;">
+                        <th style="padding: 10px; text-align: left;">Framework</th>
+                        <th style="padding: 10px; text-align: left;">Kích thước (gzip)</th>
+                        <th style="padding: 10px; text-align: left;">Ghi chú</th>
+                    </tr>
+                    <tr>
+                        <td style="padding: 10px;">React + ReactDOM</td>
+                        <td style="padding: 10px;">~42KB</td>
+                        <td style="padding: 10px;">Không bao gồm các thư viện trạng thái như Redux (~4KB)</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 10px;">Vue 3</td>
+                        <td style="padding: 10px;">~33KB</td>
+                        <td style="padding: 10px;">Bao gồm routing và state management</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 10px;">Angular</td>
+                        <td style="padding: 10px;">~110KB+</td>
+                        <td style="padding: 10px;">Bao gồm nhiều tính năng tích hợp sẵn</td>
+                    </tr>
+                </table>
+                
+                <h3>Rendering và Re-rendering</h3>
+                <p>
+                    Tất cả ba framework đều có cơ chế tối ưu việc render:
+                </p>
+                <ul>
+                    <li><strong>React:</strong> Sử dụng Virtual DOM và thuật toán Reconciliation. Từ React 16, có Fiber architecture 
+                    cho phép chia nhỏ quá trình render thành các phần, có thể tạm dừng và tiếp tục.</li>
+                    <li><strong>Vue:</strong> Sử dụng Virtual DOM kết hợp với hệ thống theo dõi phụ thuộc, chỉ re-render các component 
+                    bị ảnh hưởng trực tiếp bởi thay đổi state.</li>
+                    <li><strong>Angular:</strong> Sử dụng Change Detection để theo dõi và phản ứng với sự thay đổi dữ liệu. Angular 
+                    tối ưu hóa việc này với OnPush strategy cho phép kiểm soát tốt hơn khi nào component nên được kiểm tra thay đổi.</li>
+                </ul>
+                
+                <h3>Kết quả benchmark</h3>
+                <p>
+                    Các benchmark thường thay đổi theo phiên bản, cách triển khai và tình huống cụ thể. Tuy nhiên, có một số quan sát chung:
+                </p>
+                <ul>
+                    <li>Vue thường có thời gian khởi tạo (initial render) nhanh nhất</li>
+                    <li>React và Vue có hiệu suất re-render tương đương nhau</li>
+                    <li>Angular có thể chậm hơn ở thời gian khởi tạo nhưng có hiệu suất tốt cho các ứng dụng phức tạp</li>
+                    <li>Tất cả đều đủ nhanh cho hầu hết các ứng dụng khi được tối ưu đúng cách</li>
+                </ul>
+                
+                <div style="text-align: center; margin: 20px 0;">
+                    <img src="../images/js-frameworks-performance.png" alt="Framework Performance Comparison" style="max-width: 600px; margin: 0 auto;">
+                    <p style="font-style: italic; margin-top: 10px;">Hình 1: Biểu đồ so sánh hiệu suất (minh họa)</p>
+                </div>
+                
+                <h2>So sánh độ phức tạp khi học và phát triển</h2>
+                
+                <h3>Độ dốc của đường cong học tập</h3>
+                <table border="1" style="width:100%; border-collapse: collapse; margin: 20px 0;">
+                    <tr style="background-color: #f8f9fa;">
+                        <th style="padding: 10px; text-align: left;">Framework</th>
+                        <th style="padding: 10px; text-align: left;">Đường cong học tập</th>
+                        <th style="padding: 10px; text-align: left;">Lý do</th>
+                    </tr>
+                    <tr>
+                        <td style="padding: 10px;">React</td>
+                        <td style="padding: 10px;">Trung bình</td>
+                        <td style="padding: 10px;">JSX có thể lạ lúc đầu, nhưng API nhỏ gọn. Tuy nhiên, nhiều cách tiếp cận và thư viện bên ngoài có thể gây nhầm lẫn.</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 10px;">Vue</td>
+                        <td style="padding: 10px;">Thấp</td>
+                        <td style="padding: 10px;">Cú pháp gần với HTML và JavaScript thuần. Tài liệu rất tốt với các ví dụ rõ ràng.</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 10px;">Angular</td>
+                        <td style="padding: 10px;">Cao</td>
+                        <td style="padding: 10px;">Framework toàn diện với nhiều khái niệm cần làm quen. TypeScript, RxJS, Dependency Injection, Decorators, v.v.</td>
+                    </tr>
+                </table>
+                
+                <h3>Trải nghiệm phát triển</h3>
+                <p>
+                    <strong>React:</strong> Hệ sinh thái phong phú với nhiều lựa chọn nhưng đôi khi lại quá nhiều (thường được gọi 
+                    là "JavaScript fatigue"). Create React App, Next.js, và các công cụ khác cung cấp trải nghiệm phát triển tốt.
+                </p>
+                <pre><code class="language-bash">
+# Tạo ứng dụng React mới
+npx create-react-app my-app
+cd my-app
+npm start
+                </code></pre>
+                
+                <p>
+                    <strong>Vue:</strong> CLI của Vue cung cấp trải nghiệm phát triển tuyệt vời với nhiều tùy chọn tích hợp sẵn. 
+                    Vue DevTools cũng rất mạnh mẽ và dễ sử dụng.
+                </p>
+                <pre><code class="language-bash">
+# Tạo ứng dụng Vue mới
+npm init vue@latest
+cd my-vue-app
+npm install
+npm run dev
+                </code></pre>
+                
+                <p>
+                    <strong>Angular:</strong> Angular CLI là một công cụ toàn diện giúp tạo, phát triển, test và deploy ứng dụng. 
+                    Angular cũng có schematics để tạo code tự động.
+                </p>
+                <pre><code class="language-bash">
+# Tạo ứng dụng Angular mới
+ng new my-angular-app
+cd my-angular-app
+ng serve
+                </code></pre>
+                
+                <h2>Hệ sinh thái và cộng đồng</h2>
+                
+                <h3>React</h3>
+                <p>
+                    React có cộng đồng lớn nhất trong số ba framework và được nhiều công ty lớn sử dụng (Facebook, Instagram, Airbnb, 
+                    Netflix, Dropbox). Hệ sinh thái rất phong phú với các thư viện như:
+                </p>
+                <ul>
+                    <li><strong>Quản lý state:</strong> Redux, MobX, Recoil, Zustand</li>
+                    <li><strong>Routing:</strong> React Router</li>
+                    <li><strong>Forms:</strong> Formik, React Hook Form</li>
+                    <li><strong>UI Components:</strong> Material-UI, Chakra UI, Ant Design</li>
+                    <li><strong>Meta-frameworks:</strong> Next.js, Gatsby, Remix</li>
+                </ul>
+                
+                <h3>Vue</h3>
+                <p>
+                    Vue có cộng đồng năng động và đang phát triển nhanh chóng, đặc biệt phổ biến ở Trung Quốc và các công ty như 
+                    Alibaba, Baidu, và Tencent. Các thư viện phổ biến bao gồm:
+                </p>
+                <ul>
+                    <li><strong>Quản lý state:</strong> Vuex, Pinia</li>
+                    <li><strong>Routing:</strong> Vue Router</li>
+                    <li><strong>Forms:</strong> VeeValidate, FormKit</li>
+                    <li><strong>UI Components:</strong> Vuetify, Element Plus, Quasar</li>
+                    <li><strong>Meta-frameworks:</strong> Nuxt.js, Vite</li>
+                </ul>
+                
+                <h3>Angular</h3>
+                <p>
+                    Angular có cộng đồng doanh nghiệp vững chắc và được sử dụng bởi Google, Microsoft, IBM, và nhiều công ty lớn khác.
+                    Hệ sinh thái được xây dựng chủ yếu xung quanh các thư viện chính thức từ đội ngũ Angular:
+                </p>
+                <ul>
+                    <li><strong>State management:</strong> NGRX, NGXS, Akita</li>
+                    <li><strong>Routing:</strong> Angular Router (tích hợp sẵn)</li>
+                    <li><strong>Forms:</strong> Reactive Forms, Template-driven Forms (tích hợp sẵn)</li>
+                    <li><strong>UI Components:</strong> Angular Material, NG Bootstrap, PrimeNG</li>
+                    <li><strong>SSR & Meta-frameworks:</strong> Angular Universal, Scully</li>
+                </ul>
+                
+                <h3>Xu hướng tìm kiếm và thị trường việc làm</h3>
+                <p>
+                    Dựa trên dữ liệu từ Google Trends và các nền tảng tuyển dụng:
+                </p>
+                <ul>
+                    <li>React dẫn đầu về số lượng công việc và lượng tìm kiếm toàn cầu</li>
+                    <li>Angular thường được ưa chuộng hơn trong các doanh nghiệp lớn và dự án enterprise</li>
+                    <li>Vue phổ biến trong các công ty startup và dự án mới, đặc biệt ở châu Á</li>
+                </ul>
+                
+                <div style="text-align: center; margin: 20px 0;">
+                    <img src="../images/js-frameworks-trends.png" alt="Framework Trends" style="max-width: 600px; margin: 0 auto;">
+                    <p style="font-style: italic; margin-top: 10px;">Hình 2: Xu hướng tìm kiếm của các framework (minh họa)</p>
+                </div>
+                
+                <h2>Khi nào nên sử dụng từng framework</h2>
+                
+                <h3>Chọn React khi:</h3>
+                <ul>
+                    <li>Cần xây dựng UI phức tạp với nhiều thành phần tương tác</li>
+                    <li>Muốn sự linh hoạt cao trong việc chọn thư viện và công nghệ bổ sung</li>
+                    <li>Đã quen với JavaScript và muốn áp dụng kỹ năng đó vào phát triển UI</li>
+                    <li>Có nhu cầu về hệ sinh thái phong phú và cộng đồng lớn</li>
+                    <li>Làm việc với các ứng dụng single-page (SPA) quy mô lớn</li>
+                    <li>Ví dụ dự án phù hợp: Ứng dụng quản lý dự án phức tạp, mạng xã hội, dashboard với nhiều thành phần tương tác</li>
+                </ul>
+                
+                <h3>Chọn Vue khi:</h3>
+                <ul>
+                    <li>Cần framework dễ tiếp cận với đường cong học tập thấp</li>
+                    <li>Muốn sự cân bằng giữa sự đơn giản và tính mạnh mẽ</li>
+                    <li>Có sự hòa trộn giữa developers mới và có kinh nghiệm</li>
+                    <li>Dần dần nâng cấp từ các ứng dụng jQuery/Vanilla JS</li>
+                    <li>Ưu tiên tính bảo trì và đọc hiểu code dễ dàng</li>
+                    <li>Ví dụ dự án phù hợp: Ứng dụng thương mại điện tử vừa và nhỏ, CMS tùy chỉnh, ứng dụng có thể tích hợp vào hệ thống hiện có</li>
+                </ul>
+                
+                <h3>Chọn Angular khi:</h3>
+                <ul>
+                    <li>Xây dựng ứng dụng enterprise quy mô lớn và phức tạp</li>
+                    <li>Làm việc với team lớn cần quy tắc và cấu trúc rõ ràng</li>
+                    <li>Ưa thích TypeScript và lập trình hướng đối tượng</li>
+                    <li>Cần một giải pháp toàn diện "batteries-included"</li>
+                    <li>Cần các công cụ testing tích hợp sẵn</li>
+                    <li>Ví dụ dự án phù hợp: Phần mềm doanh nghiệp phức tạp, ứng dụng ngân hàng, hệ thống quản lý quy mô lớn</li>
+                </ul>
+                
+                <h2>Ví dụ thực tế: To-do App với ba framework</h2>
+                <p>
+                    Để minh họa sự khác biệt, dưới đây là ví dụ về một ứng dụng To-do đơn giản được triển khai trong cả ba framework:
+                </p>
+                
+                <h3>React To-do App</h3>
+                <pre><code class="language-jsx">
+// App.js
+import React, { useState } from 'react';
+import './App.css';
+
+function App() {
+  const [todos, setTodos] = useState([]);
+  const [input, setInput] = useState('');
+
+  const addTodo = (e) => {
+    e.preventDefault();
+    if (!input.trim()) return;
+    setTodos([...todos, { id: Date.now(), text: input, completed: false }]);
+    setInput('');
+  };
+
+  const toggleTodo = (id) => {
+    setTodos(
+      todos.map(todo => 
+        todo.id === id ? { ...todo, completed: !todo.completed } : todo
+      )
+    );
+  };
+
+  const deleteTodo = (id) => {
+    setTodos(todos.filter(todo => todo.id !== id));
+  };
+
+  return (
+    &lt;div className="app"&gt;
+      &lt;h1&gt;React Todo App&lt;/h1&gt;
+      &lt;form onSubmit={addTodo}&gt;
+        &lt;input 
+          type="text" 
+          value={input} 
+          onChange={(e) => setInput(e.target.value)}
+          placeholder="Thêm công việc..."
+        /&gt;
+        &lt;button type="submit"&gt;Thêm&lt;/button&gt;
+      &lt;/form&gt;
+      &lt;ul&gt;
+        {todos.map(todo => (
+          &lt;li 
+            key={todo.id}
+            style={{ textDecoration: todo.completed ? 'line-through' : 'none' }}
+          &gt;
+            &lt;span onClick={() => toggleTodo(todo.id)}&gt;{todo.text}&lt;/span&gt;
+            &lt;button onClick={() => deleteTodo(todo.id)}&gt;Xóa&lt;/button&gt;
+          &lt;/li&gt;
+        ))}
+      &lt;/ul&gt;
+    &lt;/div&gt;
+  );
+}
+
+export default App;
+                </code></pre>
+                
+                <h3>Vue To-do App</h3>
+                <pre><code class="language-html">
+&lt;!-- App.vue --&gt;
+&lt;template&gt;
+  &lt;div class="app"&gt;
+    &lt;h1&gt;Vue Todo App&lt;/h1&gt;
+    &lt;form @submit.prevent="addTodo"&gt;
+      &lt;input 
+        type="text" 
+        v-model="newTodo" 
+        placeholder="Thêm công việc..."
+      &gt;
+      &lt;button type="submit"&gt;Thêm&lt;/button&gt;
+    &lt;/form&gt;
+    &lt;ul&gt;
+      &lt;li 
+        v-for="todo in todos" 
+        :key="todo.id"
+        :style="{ textDecoration: todo.completed ? 'line-through' : 'none' }"
+      &gt;
+        &lt;span @click="toggleTodo(todo.id)"&gt;{{ todo.text }}&lt;/span&gt;
+        &lt;button @click="deleteTodo(todo.id)"&gt;Xóa&lt;/button&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+export default {
+  data() {
+    return {
+      todos: [],
+      newTodo: ''
+    }
+  },
+  methods: {
+    addTodo() {
+      if (!this.newTodo.trim()) return;
+      this.todos.push({
+        id: Date.now(),
+        text: this.newTodo,
+        completed: false
+      });
+      this.newTodo = '';
+    },
+    toggleTodo(id) {
+      const todo = this.todos.find(todo => todo.id === id);
+      if (todo) todo.completed = !todo.completed;
+    },
+    deleteTodo(id) {
+      this.todos = this.todos.filter(todo => todo.id !== id);
+    }
+  }
+}
+&lt;/script&gt;
+
+&lt;style&gt;
+.app {
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 20px;
+}
+ul {
+  list-style: none;
+  padding: 0;
+}
+li {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+  border-bottom: 1px solid #eee;
+}
+&lt;/style&gt;
+                </code></pre>
+                
+                <h3>Angular To-do App</h3>
+                <pre><code class="language-typescript">
+// app.component.ts
+import { Component } from '@angular/core';
+
+interface Todo {
+  id: number;
+  text: string;
+  completed: boolean;
+}
+
+@Component({
+  selector: 'app-root',
+  template: `
+    &lt;div class="app"&gt;
+      &lt;h1&gt;Angular Todo App&lt;/h1&gt;
+      &lt;form (ngSubmit)="addTodo()"&gt;
+        &lt;input 
+          type="text" 
+          [(ngModel)]="newTodo"
+          name="newTodo" 
+          placeholder="Thêm công việc..."
+        &gt;
+        &lt;button type="submit"&gt;Thêm&lt;/button&gt;
+      &lt;/form&gt;
+      &lt;ul&gt;
+        &lt;li 
+          *ngFor="let todo of todos"
+          [style.textDecoration]="todo.completed ? 'line-through' : 'none'"
+        &gt;
+          &lt;span (click)="toggleTodo(todo.id)"&gt;{{ todo.text }}&lt;/span&gt;
+          &lt;button (click)="deleteTodo(todo.id)"&gt;Xóa&lt;/button&gt;
+        &lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/div&gt;
+  `,
+  styles: [`
+    .app {
+      max-width: 500px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+    li {
+      display: flex;
+      justify-content: space-between;
+      padding: 8px 0;
+      border-bottom: 1px solid #eee;
+    }
+  `]
+})
+export class AppComponent {
+  todos: Todo[] = [];
+  newTodo = '';
+
+  addTodo(): void {
+    if (!this.newTodo.trim()) return;
+    
+    this.todos.push({
+      id: Date.now(),
+      text: this.newTodo,
+      completed: false
+    });
+    
+    this.newTodo = '';
+  }
+
+  toggleTodo(id: number): void {
+    const todo = this.todos.find(t => t.id === id);
+    if (todo) {
+      todo.completed = !todo.completed;
+    }
+  }
+
+  deleteTodo(id: number): void {
+    this.todos = this.todos.filter(t => t.id !== id);
+  }
+}
+                </code></pre>
+                
+                <h2>Kết luận</h2>
+                <p>
+                    React, Vue và Angular đều là các công cụ mạnh mẽ cho phát triển web hiện đại, nhưng phục vụ các nhu cầu và 
+                    triết lý khác nhau:
+                </p>
+                
+                <ul>
+                    <li><strong>React:</strong> Ưu tiên sự linh hoạt, có cộng đồng lớn và hệ sinh thái phong phú. Phù hợp cho 
+                    các dự án muốn tùy chỉnh cao và không muốn bị ràng buộc bởi các quy tắc nghiêm ngặt.</li>
+                    <li><strong>Vue:</strong> Cân bằng tốt giữa hiệu suất và độ phức tạp. Thân thiện với người mới bắt đầu nhưng 
+                    cũng đủ mạnh mẽ cho các ứng dụng phức tạp. Phù hợp khi bạn muốn một framework có thiết kế tốt và dễ học.</li>
+                    <li><strong>Angular:</strong> Framework toàn diện với cấu trúc rõ ràng và tính nhất quán cao. Phù hợp cho các 
+                    dự án quy mô lớn, yêu cầu cấu trúc rõ ràng và có thời gian phát triển dài.</li>
+                </ul>
+                
+                <p>
+                    Cuối cùng, lựa chọn framework nào phụ thuộc vào nhiều yếu tố như:
+                </p>
+                <ul>
+                    <li>Bản chất và phạm vi của dự án</li>
+                    <li>Kinh nghiệm và sở thích của team</li>
+                    <li>Hệ sinh thái và hỗ trợ cộng đồng</li>
+                    <li>Hiệu suất và yêu cầu quy mô</li>
+                    <li>Tầm nhìn dài hạn của dự án</li>
+                </ul>
+                
+                <p>
+                    Thay vì tập trung vào việc "framework nào tốt nhất", hãy tìm hiểu "framework nào tốt nhất cho dự án và team của bạn".
+                    Mỗi công cụ đều có chỗ đứng riêng trong hệ sinh thái phát triển web hiện đại.
+                </p>
+                
+                <div class="post-tags">
+                    <span>#JavaScript</span>
+                    <span>#React</span>
+                    <span>#Vue</span>
+                    <span>#Angular</span>
+                    <span>#FrontendFrameworks</span>
+                </div>
+                
+                <div class="post-navigation">
+                    <a href="post-6.html" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Bài trước</a>
+                    <a href="post-8.html" class="btn btn-primary">Bài tiếp theo <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+            
+            <div class="author-section">
+                <div class="author-avatar">
+                    <img src="../images/profile.jpg" alt="Bùi Dương Tin">
+                </div>
+                <div class="author-info">
+                    <h3>Bùi Dương Tin</h3>
+                    <p>Lập trình viên với hơn 5 năm kinh nghiệm phát triển ứng dụng Java và JavaScript. Chuyên sâu về lập trình mạng và các công nghệ web hiện đại.</p>
+                    <div class="social">
+                        <a href="#" target="_blank"><i class="fab fa-github"></i></a>
+                        <a href="#" target="_blank"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Related Posts -->
+    <section class="related-posts">
+        <div class="container">
+            <h2>Bài viết liên quan</h2>
+            <div class="posts-grid">
+                <div class="post-card">
+                    <div class="post-img">
+                        <img src="../images/post-2.jpg" alt="JavaScript Asynchronous">
+                        <div class="post-category">JavaScript</div>
+                    </div>
+                    <div class="post-content">
+                        <h3><a href="post-2.html">Lập trình bất đồng bộ trong JavaScript với Promise và Async/Await</a></h3>
+                        <div class="post-meta">
+                            <span><i class="far fa-calendar"></i> 10/10/2025</span>
+                            <span><i class="far fa-clock"></i> 12 phút đọc</span>
+                        </div>
+                        <p>Giải thích chi tiết về cách hoạt động của Promise, Async/Await và cách xử lý các tác vụ bất đồng bộ trong JavaScript...</p>
+                        <a href="post-2.html" class="read-more">Đọc tiếp <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+
+                <div class="post-card">
+                    <div class="post-img">
+                        <img src="../images/post-9.jpg" alt="JavaScript Performance">
+                        <div class="post-category">JavaScript</div>
+                    </div>
+                    <div class="post-content">
+                        <h3><a href="post-9.html">Tối ưu hóa hiệu suất JavaScript trong ứng dụng web</a></h3>
+                        <div class="post-meta">
+                            <span><i class="far fa-calendar"></i> 20/08/2025</span>
+                            <span><i class="far fa-clock"></i> 19 phút đọc</span>
+                        </div>
+                        <p>Các kỹ thuật tối ưu hóa hiệu suất JavaScript, giảm thiểu tải trang, lazy loading, memoization và các công cụ đo lường hiệu suất...</p>
+                        <a href="post-9.html" class="read-more">Đọc tiếp <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <a href="../index.html">BDT<span>Code</span></a>
+                    <p>Blog chia sẻ kiến thức lập trình Java và JavaScript, hướng dẫn phát triển ứng dụng mạng.</p>
+                </div>
+                <div class="footer-links">
+                    <h3>Liên kết nhanh</h3>
+                    <ul>
+                        <li><a href="../index.html">Trang chủ</a></li>
+                        <li><a href="../blog.html">Blog</a></li>
+                    </ul>
+                </div>
+                <div class="footer-contact">
+                    <h3>Liên hệ</h3>
+                    <p><i class="fas fa-envelope"></i> info@buiduongtin.com</p>
+                    <p><i class="fas fa-phone"></i> +84 123 456 789</p>
+                    <div class="social">
+                        <a href="#" target="_blank"><i class="fab fa-github"></i></a>
+                        <a href="#" target="_blank"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" target="_blank"><i class="fab fa-facebook"></i></a>
+                        <a href="#" target="_blank"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Bùi Dương Tin. Tất cả các quyền được bảo lưu.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+    <script src="../js/main.js"></script>
+</body>
+</html>

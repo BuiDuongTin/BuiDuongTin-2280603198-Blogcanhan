@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tối ưu hóa hiệu suất JavaScript trong ứng dụng web - Bùi Dương Tin</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css">
+</head>
+<body>
+    <!-- Header & Navigation -->
+    <header>
+        <div class="container">
+            <div class="logo">
+                <a href="../index.html">BDT<span>Code</span></a>
+            </div>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="../index.html">Trang chủ</a></li>
+                    <li><a href="../blog.html" class="active">Blog</a></li>
+                </ul>
+                <div class="hamburger">
+                    <div class="line"></div>
+                    <div class="line"></div>
+                    <div class="line"></div>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Post Header -->
+    <section class="post-header">
+        <div class="container">
+            <h1>Tối ưu hóa hiệu suất JavaScript trong ứng dụng web</h1>
+            <div class="post-meta">
+                <span><i class="far fa-calendar"></i> 20/08/2025</span>
+                <span><i class="far fa-clock"></i> 19 phút đọc</span>
+                <span><i class="far fa-folder"></i> JavaScript</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Post Content -->
+    <section class="post-content">
+        <div class="container">
+            <div class="post-image">
+                <img src="../images/post-9.jpg" alt="JavaScript Performance Optimization">
+            </div>
+            
+            <div class="content">
+                <h2>Tầm quan trọng của hiệu suất trong ứng dụng web</h2>
+                <p>
+                    Hiệu suất là một trong những yếu tố quan trọng nhất ảnh hưởng đến trải nghiệm người dùng trên web. 
+                    Theo nghiên cứu, 53% người dùng sẽ rời khỏi trang web nếu nó mất hơn 3 giây để tải, và 79% người dùng 
+                    sẽ không quay lại trang web có hiệu suất kém. Hơn nữa, Google đã đưa tốc độ tải trang thành một trong 
+                    những yếu tố xếp hạng SEO.
+                </p>
+                
+                <p>
+                    JavaScript là một trong những yếu tố chính ảnh hưởng đến hiệu suất của ứng dụng web. Trong bài viết này, 
+                    chúng ta sẽ khám phá các kỹ thuật tối ưu hóa JavaScript từ cơ bản đến nâng cao, giúp ứng dụng web của bạn 
+                    chạy nhanh hơn và tiêu tốn ít tài nguyên hơn.
+                </p>
+
+                <h2>Hiểu về cách trình duyệt xử lý JavaScript</h2>
+                <p>
+                    Để tối ưu hiệu suất JavaScript, điều quan trọng là hiểu cách trình duyệt tải và thực thi mã JavaScript. 
+                    Quá trình này thường bao gồm các bước sau:
+                </p>
+                
+                <ol>
+                    <li><strong>Tải (Downloading)</strong>: Trình duyệt tải file JavaScript từ server</li>
+                    <li><strong>Phân tích (Parsing)</strong>: Biến đổi mã nguồn thành AST (Abstract Syntax Tree)</li>
+                    <li><strong>Biên dịch (Compilation)</strong>: Biên dịch AST thành bytecode hoặc machine code</li>
+                    <li><strong>Thực thi (Execution)</strong>: Chạy mã đã được biên dịch</li>
+                </ol>
+                
+                <p>
+                    Mỗi bước này đều có thể ảnh hưởng đến hiệu suất trang web. Hãy xem xét các kỹ thuật để cải thiện hiệu suất 
+                    ở từng bước.
+                </p>
+                
+                <h2>Tối ưu thời gian tải</h2>
+                
+                <h3>1. Giảm kích thước file</h3>
+                <p>
+                    Kích thước file JavaScript càng nhỏ, thời gian tải càng nhanh.
+                </p>
+                
+                <h4>Minification (Thu nhỏ mã)</h4>
+                <p>
+                    Minification là quá trình loại bỏ các ký tự không cần thiết (khoảng trắng, xuống dòng, comment) và 
+                    rút gọn tên biến để giảm kích thước file.
+                </p>
+                
+                <pre><code class="language-javascript">
+// Trước khi minify
+function calculateTotal(price, quantity, taxRate) {
+    // Tính tổng giá trị
+    var subtotal = price * quantity;
+    var tax = subtotal * taxRate;
+    var total = subtotal + tax;
+    
+    return total;
+}
+
+// Sau khi minify
+function calculateTotal(a,b,c){var d=a*b,e=d*c;return d+e}
+                </code></pre>
+                
+                <p>
+                    Công cụ phổ biến: UglifyJS, Terser, Closure Compiler
+                </p>
+                
+                <h4>Compression (Nén)</h4>
+                <p>
+                    Nén file bằng gzip hoặc brotli trước khi gửi từ server đến client giúp giảm kích thước tải xuống.
+                </p>
+                <pre><code class="language-javascript">
+// Cấu hình nén gzip trên Express.js
+const express = require('express');
+const compression = require('compression');
+const app = express();
+
+// Áp dụng middleware nén
+app.use(compression());
+
+// Serve static files
+app.use(express.static('public'));
+
+app.listen(3000);
+                </code></pre>
+                
+                <h3>2. Code splitting (Phân chia mã)</h3>
+                <p>
+                    Code splitting giúp chia nhỏ mã JavaScript thành các gói (bundles) nhỏ hơn, chỉ tải những gì cần thiết 
+                    cho trang hiện tại.
+                </p>
+                
+                <pre><code class="language-javascript">
+// Sử dụng dynamic import trong JavaScript hiện đại
+button.addEventListener('click', async () => {
+    // Chỉ tải module khi cần thiết
+    const { default: Chart } = await import('./chart.js');
+    
+    // Sử dụng module
+    const chart = new Chart(data);
+    chart.render();
+});
+
+// Với webpack
+// Cấu hình trong webpack.config.js
+module.exports = {
+  entry: './src/index.js',
+  output: {
+    filename: 'main.[contenthash].js',
+    chunkFilename: 'chunk.[contenthash].js',
+    path: path.resolve(__dirname, 'dist')
+  },
+  optimization: {
+    splitChunks: {
+      chunks: 'all'
+    }
+  }
+};
+                </code></pre>
+                
+                <h3>3. Tree shaking</h3>
+                <p>
+                    Tree shaking là kỹ thuật loại bỏ mã không sử dụng (dead code) khỏi bundle cuối cùng.
+                </p>
+                
+                <pre><code class="language-javascript">
+// Trước tree shaking
+import { sum, multiply, divide } from './math.js';
+
+// Chỉ sử dụng hàm sum
+console.log(sum(5, 3));
+
+// Sau tree shaking, chỉ hàm sum được đưa vào bundle, 
+// multiply và divide bị loại bỏ
+                </code></pre>
+                
+                <h3>4. Lazy loading (Tải chậm)</h3>
+                <p>
+                    Lazy loading là kỹ thuật tải tài nguyên khi cần thiết thay vì tải tất cả ngay từ đầu.
+                </p>
+                
+                <pre><code class="language-javascript">
+// Lazy loading images
+document.addEventListener("DOMContentLoaded", function() {
+    const lazyImages = [].slice.call(document.querySelectorAll("img.lazy"));
+    
+    if ("IntersectionObserver" in window) {
+        const lazyImageObserver = new IntersectionObserver(function(entries, observer) {
+            entries.forEach(function(entry) {
+                if (entry.isIntersecting) {
+                    let lazyImage = entry.target;
+                    lazyImage.src = lazyImage.dataset.src;
+                    lazyImage.classList.remove("lazy");
+                    lazyImageObserver.unobserve(lazyImage);
+                }
+            });
+        });
+        
+        lazyImages.forEach(function(lazyImage) {
+            lazyImageObserver.observe(lazyImage);
+        });
+    }
+});
+
+// HTML
+&lt;img class="lazy" data-src="image.jpg" src="placeholder.jpg" alt="Lazy loaded image"&gt;
+                </code></pre>
+                
+                <h3>5. Resource Hints</h3>
+                <p>
+                    Resource Hints như preload, prefetch, preconnect giúp tối ưu cách tải tài nguyên.
+                </p>
+                
+                <pre><code class="language-html">
+&lt;!-- Preload quan trọng JS --&gt;
+&lt;link rel="preload" href="critical.js" as="script"&gt;
+
+&lt;!-- Prefetch tài nguyên có thể cần trong tương lai --&gt;
+&lt;link rel="prefetch" href="non-critical.js"&gt;
+
+&lt;!-- Preconnect đến domain cần thiết --&gt;
+&lt;link rel="preconnect" href="https://api.example.com"&gt;
+                </code></pre>
+                
+                <h2>Tối ưu thời gian thực thi</h2>
+                
+                <h3>1. Tối ưu DOM manipulation</h3>
+                <p>
+                    Thao tác với DOM là một trong những nguyên nhân chính gây ra hiệu suất kém trong ứng dụng web.
+                </p>
+                
+                <h4>Giảm thiểu reflow và repaint</h4>
+                <pre><code class="language-javascript">
+// Không tối ưu - nhiều reflow
+for (let i = 0; i < 1000; i++) {
+    document.getElementById("container").innerHTML += `&lt;div&gt;Item ${i}&lt;/div&gt;`;
+}
+
+// Tối ưu - một reflow duy nhất
+const fragment = document.createDocumentFragment();
+for (let i = 0; i < 1000; i++) {
+    const div = document.createElement('div');
+    div.textContent = `Item ${i}`;
+    fragment.appendChild(div);
+}
+document.getElementById("container").appendChild(fragment);
+                </code></pre>
+                
+                <h4>Sử dụng CSS class thay vì inline styles</h4>
+                <pre><code class="language-javascript">
+// Không tối ưu
+element.style.backgroundColor = 'red';
+element.style.color = 'white';
+element.style.fontSize = '16px';
+element.style.fontWeight = 'bold';
+
+// Tối ưu
+element.classList.add('highlight');
+
+/* CSS */
+.highlight {
+    background-color: red;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+}
+                </code></pre>
+                
+                <h3>2. Event delegation (Ủy thác sự kiện)</h3>
+                <p>
+                    Event delegation giúp giảm số lượng event listener bằng cách gắn sự kiện vào phần tử cha thay vì nhiều phần tử con.
+                </p>
+                
+                <pre><code class="language-javascript">
+// Không tối ưu - gắn event cho mỗi button
+document.querySelectorAll('.btn').forEach(button => {
+    button.addEventListener('click', function() {
+        console.log('Button clicked:', this.textContent);
+    });
+});
+
+// Tối ưu - sử dụng event delegation
+document.getElementById('button-container').addEventListener('click', function(event) {
+    if (event.target.matches('.btn')) {
+        console.log('Button clicked:', event.target.textContent);
+    }
+});
+                </code></pre>
+                
+                <h3>3. Tránh memory leaks</h3>
+                <p>
+                    Memory leaks (rò rỉ bộ nhớ) xảy ra khi bộ nhớ không được giải phóng đúng cách, dẫn đến hiệu suất giảm dần theo thời gian.
+                </p>
+                
+                <pre><code class="language-javascript">
+// Rò rỉ bộ nhớ
+function setupListener() {
+    const element = document.getElementById('myButton');
+    element.addEventListener('click', function() {
+        // Đây là một closure, giữ tham chiếu đến biến largeData
+        console.log(largeData);
+    });
+    
+    // Biến này sẽ không được thu gom rác vì closure giữ tham chiếu
+    const largeData = new Array(10000000).fill('data');
+}
+
+// Khắc phục
+function setupListenerFixed() {
+    const element = document.getElementById('myButton');
+    
+    function handleClick() {
+        console.log('Button clicked');
+    }
+    
+    element.addEventListener('click', handleClick);
+    
+    // Xóa event listener khi không cần nữa
+    return function cleanup() {
+        element.removeEventListener('click', handleClick);
+    };
+}
+
+// Sử dụng
+const cleanup = setupListenerFixed();
+// Khi không cần nữa
+cleanup();
+                </code></pre>
+                
+                <h3>4. Sử dụng Web Workers</h3>
+                <p>
+                    Web Workers cho phép chạy JavaScript trong luồng riêng biệt, không chặn UI thread.
+                </p>
+                
+                <pre><code class="language-javascript">
+// main.js
+// Tạo worker
+const worker = new Worker('worker.js');
+
+// Gửi dữ liệu đến worker
+worker.postMessage({
+    type: 'PROCESS_DATA',
+    data: largeArray
+});
+
+// Xử lý kết quả từ worker
+worker.onmessage = function(event) {
+    const result = event.data;
+    console.log('Processed data:', result);
+};
+
+// worker.js
+// Nhận dữ liệu từ main thread
+self.onmessage = function(event) {
+    const { type, data } = event.data;
+    
+    if (type === 'PROCESS_DATA') {
+        // Xử lý dữ liệu tốn thời gian
+        const result = processLargeData(data);
+        
+        // Gửi kết quả về main thread
+        self.postMessage(result);
+    }
+};
+
+function processLargeData(data) {
+    // Xử lý phức tạp, tốn CPU
+    return data.map(item => item * 2).filter(item => item > 100);
+}
+                </code></pre>
+                
+                <h3>5. Memoization (Nhớ kết quả)</h3>
+                <p>
+                    Memoization là kỹ thuật lưu trữ kết quả của các hàm tốn kém để tái sử dụng, thay vì tính toán lại.
+                </p>
+                
+                <pre><code class="language-javascript">
+// Không sử dụng memoization - tính toán mỗi lần gọi
+function fibonacci(n) {
+    if (n <= 1) return n;
+    return fibonacci(n - 1) + fibonacci(n - 2);
+}
+
+// Sử dụng memoization
+function memoizedFibonacci() {
+    const cache = {};
+    
+    return function fib(n) {
+        if (n in cache) {
+            return cache[n];
+        }
+        
+        if (n <= 1) {
+            return n;
+        }
+        
+        const result = fib(n - 1) + fib(n - 2);
+        cache[n] = result;
+        return result;
+    };
+}
+
+const fastFibonacci = memoizedFibonacci();
+console.time('Không memoize');
+fibonacci(40); // Rất chậm
+console.timeEnd('Không memoize');
+
+console.time('Có memoize');
+fastFibonacci(40); // Nhanh hơn rất nhiều
+console.timeEnd('Có memoize');
+                </code></pre>
+                
+                <h2>Tối ưu rendering</h2>
+                
+                <h3>1. Tránh blocking JavaScript</h3>
+                <p>
+                    JavaScript chặn quá trình render của trình duyệt. Việc tải và thực thi JavaScript không phù hợp có thể làm chậm 
+                    trang web.
+                </p>
+                
+                <pre><code class="language-html">
+&lt;!-- Không tối ưu - chặn rendering --&gt;
+&lt;script src="large-script.js"&gt;&lt;/script&gt;
+
+&lt;!-- Tối ưu - async load --&gt;
+&lt;script async src="non-critical-script.js"&gt;&lt;/script&gt;
+
+&lt;!-- Tối ưu hơn nữa - defer load --&gt;
+&lt;script defer src="can-wait-script.js"&gt;&lt;/script&gt;
+
+&lt;!-- Đặt script không quan trọng ở cuối --&gt;
+&lt;/body&gt;
+&lt;script src="non-essential.js"&gt;&lt;/script&gt;
+&lt;/html&gt;
+                </code></pre>
+                
+                <h3>2. Tối ưu với requestAnimationFrame</h3>
+                <p>
+                    requestAnimationFrame giúp đồng bộ hóa các animation và visual updates với chu kỳ render của trình duyệt.
+                </p>
+                
+                <pre><code class="language-javascript">
+// Không tối ưu - có thể gây giật lag
+function animate() {
+    element.style.transform = `translateX(${position}px)`;
+    position += 5;
+    setTimeout(animate, 16); // ~60fps
+}
+
+// Tối ưu với requestAnimationFrame
+function animateSmooth() {
+    element.style.transform = `translateX(${position}px)`;
+    position += 5;
+    requestAnimationFrame(animateSmooth);
+}
+
+requestAnimationFrame(animateSmooth);
+                </code></pre>
+                
+                <h3>3. Đo đạc và phân tích hiệu suất</h3>
+                <p>
+                    Không thể cải thiện những gì không đo lường được. Các công cụ phân tích hiệu suất rất quan trọng.
+                </p>
+                
+                <h4>Performance API</h4>
+                <pre><code class="language-javascript">
+// Đánh dấu bắt đầu
+performance.mark('start-process');
+
+// Thực hiện tác vụ cần đo
+processData(largeDataset);
+
+// Đánh dấu kết thúc
+performance.mark('end-process');
+
+// Tạo measurement
+performance.measure('data-processing', 'start-process', 'end-process');
+
+// Lấy kết quả
+const measurements = performance.getEntriesByType('measure');
+console.log(`Thời gian xử lý: ${measurements[0].duration}ms`);
+
+// Xóa marks khi không cần nữa
+performance.clearMarks();
+performance.clearMeasures();
+                </code></pre>
+                
+                <h4>Công cụ phân tích</h4>
+                <ul>
+                    <li><strong>Chrome DevTools Performance tab</strong>: Phân tích runtime, rendering, painting</li>
+                    <li><strong>Lighthouse</strong>: Kiểm tra tổng thể hiệu suất web</li>
+                    <li><strong>WebPageTest</strong>: Kiểm tra hiệu suất từ nhiều vị trí và thiết bị</li>
+                </ul>
+                
+                <div style="text-align: center; margin: 20px 0;">
+                    <img src="../images/performance-devtools.png" alt="Chrome DevTools Performance" style="max-width: 600px; margin: 0 auto;">
+                    <p style="font-style: italic; margin-top: 10px;">Hình 1: Chrome DevTools Performance panel</p>
+                </div>
+                
+                <h2>Các kỹ thuật tối ưu nâng cao</h2>
+                
+                <h3>1. Browser rendering optimization</h3>
+                <p>
+                    Hiểu và tối ưu quá trình render của trình duyệt có thể cải thiện đáng kể hiệu suất.
+                </p>
+                
+                <h4>Tối ưu Critical Rendering Path</h4>
+                <pre><code class="language-html">
+&lt;!-- Inline critical CSS --&gt;
+&lt;style&gt;
+  /* Critical CSS cho above-the-fold content */
+  header { /* styles */ }
+  .hero { /* styles */ }
+&lt;/style&gt;
+
+&lt;!-- Preload fonts --&gt;
+&lt;link rel="preload" href="fonts/important-font.woff2" as="font" type="font/woff2" crossorigin&gt;
+
+&lt;!-- Async load non-critical CSS --&gt;
+&lt;link rel="preload" href="non-critical.css" as="style" onload="this.rel='stylesheet'"&gt;
+                </code></pre>
+                
+                <h4>Tránh forced synchronous layouts</h4>
+                <pre><code class="language-javascript">
+// Không tối ưu - forced synchronous layout
+function resizeAllElements() {
+    const elements = document.querySelectorAll('.box');
+    
+    elements.forEach(el => {
+        // Đọc (forces layout computation)
+        const height = el.offsetHeight;
+        
+        // Ghi (triggers layout again)
+        el.style.height = (height * 2) + 'px';
+    });
+}
+
+// Tối ưu - tách đọc và ghi DOM
+function resizeAllElementsOptimized() {
+    const elements = document.querySelectorAll('.box');
+    const heights = [];
+    
+    // Đọc tất cả
+    elements.forEach(el => {
+        heights.push(el.offsetHeight);
+    });
+    
+    // Ghi tất cả
+    elements.forEach((el, i) => {
+        el.style.height = (heights[i] * 2) + 'px';
+    });
+}
+                </code></pre>
+                
+                <h3>2. Tối ưu JavaScript Framework</h3>
+                <p>
+                    Các framework như React, Vue, Angular có các kỹ thuật tối ưu hiệu suất riêng.
+                </p>
+                
+                <h4>React</h4>
+                <pre><code class="language-jsx">
+// Tối ưu với memo
+const MemoizedComponent = React.memo(function MyComponent(props) {
+    // Chỉ render lại khi props thay đổi
+    return &lt;div&gt;{props.name}&lt;/div&gt;;
+});
+
+// Tối ưu với useMemo và useCallback
+function OptimizedComponent({ data, onItemClick }) {
+    // Tránh tính toán lại khi re-render
+    const processedData = React.useMemo(() => {
+        return heavyProcessing(data);
+    }, [data]);
+    
+    // Tránh tạo lại function khi re-render
+    const handleClick = React.useCallback((item) => {
+        onItemClick(item.id);
+    }, [onItemClick]);
+    
+    return (
+        &lt;ul&gt;
+            {processedData.map(item => (
+                &lt;li key={item.id} onClick={() => handleClick(item)}&gt;
+                    {item.name}
+                &lt;/li&gt;
+            ))}
+        &lt;/ul&gt;
+    );
+}
+                </code></pre>
+                
+                <h4>Vue</h4>
+                <pre><code class="language-html">
+&lt;!-- Sử dụng v-once cho nội dung tĩnh --&gt;
+&lt;span v-once&gt;Nội dung này sẽ chỉ render một lần&lt;/span&gt;
+
+&lt;!-- Sử dụng v-memo để tránh re-render không cần thiết --&gt;
+&lt;div v-memo="[item.id === selectedId]"&gt;
+  {{ item.name }}
+&lt;/div&gt;
+
+&lt;script&gt;
+// Sử dụng computed property
+export default {
+  data() {
+    return {
+      items: []
+    }
+  },
+  computed: {
+    // Chỉ tính toán lại khi items thay đổi
+    processedItems() {
+      return this.items.filter(item => item.active)
+                       .map(item => ({ ...item, fullName: `${item.firstName} ${item.lastName}` }));
+    }
+  }
+}
+&lt;/script&gt;
+                </code></pre>
+                
+                <h3>3. Service Workers và Caching</h3>
+                <p>
+                    Service Workers cho phép cache tài nguyên và thậm chí cho phép ứng dụng hoạt động offline.
+                </p>
+                
+                <pre><code class="language-javascript">
+// Đăng ký Service Worker
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js')
+            .then(registration => {
+                console.log('ServiceWorker đăng ký thành công:', registration.scope);
+            })
+            .catch(error => {
+                console.log('Đăng ký ServiceWorker thất bại:', error);
+            });
+    });
+}
+
+// sw.js - Service Worker
+const CACHE_NAME = 'my-site-v1';
+const urlsToCache = [
+    '/',
+    '/styles/main.css',
+    '/scripts/main.js',
+    '/images/logo.png'
+];
+
+// Cài đặt (install) và cache tài nguyên
+self.addEventListener('install', event => {
+    event.waitUntil(
+        caches.open(CACHE_NAME)
+            .then(cache => {
+                console.log('Opened cache');
+                return cache.addAll(urlsToCache);
+            })
+    );
+});
+
+// Xử lý fetch requests
+self.addEventListener('fetch', event => {
+    event.respondWith(
+        caches.match(event.request)
+            .then(response => {
+                // Trả về từ cache nếu có
+                if (response) {
+                    return response;
+                }
+                
+                // Ngược lại, fetch từ network
+                return fetch(event.request)
+                    .then(response => {
+                        // Kiểm tra response hợp lệ
+                        if (!response || response.status !== 200 || response.type !== 'basic') {
+                            return response;
+                        }
+                        
+                        // Clone response
+                        const responseToCache = response.clone();
+                        
+                        // Cache cho lần sau
+                        caches.open(CACHE_NAME)
+                            .then(cache => {
+                                cache.put(event.request, responseToCache);
+                            });
+                            
+                        return response;
+                    });
+            })
+    );
+});
+                </code></pre>
+                
+                <h2>Checklist tối ưu hiệu suất JavaScript</h2>
+                <p>
+                    Dưới đây là checklist tổng hợp các kỹ thuật tối ưu hiệu suất JavaScript:
+                </p>
+                
+                <h3>Tối ưu delivery</h3>
+                <ul>
+                    <li>✅ Minify và nén JavaScript</li>
+                    <li>✅ Sử dụng HTTP/2</li>
+                    <li>✅ Implement code splitting</li>
+                    <li>✅ Sử dụng tree shaking</li>
+                    <li>✅ Áp dụng các resource hints (preload, prefetch)</li>
+                    <li>✅ Sử dụng CDN</li>
+                </ul>
+                
+                <h3>Tối ưu thực thi</h3>
+                <ul>
+                    <li>✅ Giảm thiểu DOM operations</li>
+                    <li>✅ Sử dụng event delegation</li>
+                    <li>✅ Tránh forced reflow/repaint</li>
+                    <li>✅ Memoize kết quả của hàm phức tạp</li>
+                    <li>✅ Sử dụng Web Workers cho tác vụ nặng</li>
+                    <li>✅ Áp dụng virtual scrolling cho danh sách lớn</li>
+                </ul>
+                
+                <h3>Tối ưu rendering</h3>
+                <ul>
+                    <li>✅ Tải JavaScript với async/defer</li>
+                    <li>✅ Ưu tiên critical CSS inline</li>
+                    <li>✅ Sử dụng requestAnimationFrame cho animations</li>
+                    <li>✅ Tách UI updates thành chunks nhỏ</li>
+                </ul>
+                
+                <h3>Lập trình hiệu quả</h3>
+                <ul>
+                    <li>✅ Tránh memory leaks</li>
+                    <li>✅ Sử dụng cấu trúc dữ liệu phù hợp</li>
+                    <li>✅ Tránh micro-optimizations quá sớm</li>
+                    <li>✅ Đo đạc trước và sau khi tối ưu</li>
+                </ul>
+                
+                <h2>Kết luận</h2>
+                <p>
+                    Tối ưu hiệu suất JavaScript là một phần quan trọng của quá trình phát triển web hiện đại. Nó không chỉ cải thiện 
+                    trải nghiệm người dùng mà còn giúp tăng tỷ lệ chuyển đổi, cải thiện SEO và giảm tải cho server.
+                </p>
+                
+                <p>
+                    Hãy nhớ rằng tối ưu hiệu suất là một quá trình liên tục, không phải một việc làm một lần. Các trình duyệt, 
+                    thiết bị và kỳ vọng của người dùng liên tục thay đổi, vì vậy việc theo dõi và cải thiện hiệu suất nên là 
+                    một phần của quy trình phát triển thường xuyên.
+                </p>
+                
+                <p>
+                    Bắt đầu bằng việc đo lường hiệu suất hiện tại, xác định các vấn đề, áp dụng các kỹ thuật tối ưu phù hợp, và 
+                    đánh giá kết quả. Với cách tiếp cận có hệ thống, bạn có thể đạt được những cải thiện đáng kể về hiệu suất 
+                    và mang lại trải nghiệm web tuyệt vời cho người dùng.
+                </p>
+                
+                <div class="post-tags">
+                    <span>#JavaScript</span>
+                    <span>#Performance</span>
+                    <span>#Optimization</span>
+                    <span>#WebDevelopment</span>
+                    <span>#FrontEnd</span>
+                </div>
+                
+                <div class="post-navigation">
+                    <a href="post-8.html" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Bài trước</a>
+                    <a href="../blog.html" class="btn btn-primary">Tất cả bài viết <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+            
+            <div class="author-section">
+                <div class="author-avatar">
+                    <img src="../images/profile.jpg" alt="Bùi Dương Tin">
+                </div>
+                <div class="author-info">
+                    <h3>Bùi Dương Tin</h3>
+                    <p>Lập trình viên với hơn 5 năm kinh nghiệm phát triển ứng dụng Java và JavaScript. Chuyên sâu về lập trình mạng và các công nghệ web hiện đại.</p>
+                    <div class="social">
+                        <a href="#" target="_blank"><i class="fab fa-github"></i></a>
+                        <a href="#" target="_blank"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Related Posts -->
+    <section class="related-posts">
+        <div class="container">
+            <h2>Bài viết liên quan</h2>
+            <div class="posts-grid">
+                <div class="post-card">
+                    <div class="post-img">
+                        <img src="../images/post-2.jpg" alt="JavaScript Asynchronous">
+                        <div class="post-category">JavaScript</div>
+                    </div>
+                    <div class="post-content">
+                        <h3><a href="post-2.html">Lập trình bất đồng bộ trong JavaScript với Promise và Async/Await</a></h3>
+                        <div class="post-meta">
+                            <span><i class="far fa-calendar"></i> 10/10/2025</span>
+                            <span><i class="far fa-clock"></i> 12 phút đọc</span>
+                        </div>
+                        <p>Giải thích chi tiết về cách hoạt động của Promise, Async/Await và cách xử lý các tác vụ bất đồng bộ trong JavaScript...</p>
+                        <a href="post-2.html" class="read-more">Đọc tiếp <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+
+                <div class="post-card">
+                    <div class="post-img">
+                        <img src="../images/post-7.jpg" alt="JavaScript Frameworks">
+                        <div class="post-category">JavaScript</div>
+                    </div>
+                    <div class="post-content">
+                        <h3><a href="post-7.html">So sánh các framework JavaScript: React, Vue và Angular</a></h3>
+                        <div class="post-meta">
+                            <span><i class="far fa-calendar"></i> 05/09/2025</span>
+                            <span><i class="far fa-clock"></i> 16 phút đọc</span>
+                        </div>
+                        <p>So sánh chi tiết giữa các framework JavaScript phổ biến: React, Vue và Angular, ưu nhược điểm và khi nào nên sử dụng...</p>
+                        <a href="post-7.html" class="read-more">Đọc tiếp <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <a href="../index.html">BDT<span>Code</span></a>
+                    <p>Blog chia sẻ kiến thức lập trình Java và JavaScript, hướng dẫn phát triển ứng dụng mạng.</p>
+                </div>
+                <div class="footer-links">
+                    <h3>Liên kết nhanh</h3>
+                    <ul>
+                        <li><a href="../index.html">Trang chủ</a></li>
+                        <li><a href="../blog.html">Blog</a></li>
+                    </ul>
+                </div>
+                <div class="footer-contact">
+                    <h3>Liên hệ</h3>
+                    <p><i class="fas fa-envelope"></i> info@buiduongtin.com</p>
+                    <p><i class="fas fa-phone"></i> +84 123 456 789</p>
+                    <div class="social">
+                        <a href="#" target="_blank"><i class="fab fa-github"></i></a>
+                        <a href="#" target="_blank"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" target="_blank"><i class="fab fa-facebook"></i></a>
+                        <a href="#" target="_blank"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Bùi Dương Tin. Tất cả các quyền được bảo lưu.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+    <script src="../js/main.js"></script>
+</body>
+</html>
