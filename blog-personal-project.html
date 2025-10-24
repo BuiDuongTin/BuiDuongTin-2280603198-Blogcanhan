@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Bùi Dương Tín – Blog Lập Trình Mạng | Đồ án cá nhân</title>
+  <meta name="description" content="Đồ án phát triển Blog cá nhân chia sẻ về lập trình mạng của Bùi Dương Tín (HUTECH). Mục tiêu: xây dựng website hiện đại, responsive, tối ưu SEO và chia sẻ 9 bài viết về Java/JavaScript." />
+  <meta name="keywords" content="lập trình Java, JavaScript, lập trình mạng, blog cá nhân, HUTECH, Spring Boot, WebSocket, Multithreading" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-eBw0v2n9K0tGq2kq9R0J+7NwX9QfGv1u3nVf6+v0mX1f2lM1b8lTwYp3n0JXkY6Cw9mF7G5xqQb9dF8kR0kA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <style>
+    :root {
+      --bg:#0f172a; --card:#111827; --text:#e5e7eb; --muted:#9ca3af; --primary:#2d6cdf; --accent:#f7c948; --border:#1f2937;
+    }
+    *{box-sizing:border-box}body{margin:0;background:linear-gradient(180deg,#0b1222,#0f172a);color:var(--text);font-family:Montserrat,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,sans-serif;}
+    a{color:#93c5fd;text-decoration:none}
+    header{position:sticky;top:0;z-index:20;background:rgba(10,14,25,.6);backdrop-filter:blur(10px);border-bottom:1px solid var(--border)}
+    .container{max-width:1100px;margin:auto;padding:0 20px}
+    .nav{display:flex;align-items:center;justify-content:space-between;height:64px}
+    .logo{font-weight:700;letter-spacing:.3px}
+    .logo span{color:#93c5fd}
+    .nav a{margin-left:18px}
+    .hero{padding:72px 0 42px;border-bottom:1px solid var(--border);background:radial-gradient(1200px 300px at 50% -40%,rgba(45,108,223,.18),transparent 60%)}
+    .hero h1{font-size:32px;margin:0 0 10px}
+    .hero p{color:var(--muted);margin:0}
+    .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:18px}
+    .card{background:var(--card);border:1px solid var(--border);border-radius:16px;box-shadow:0 10px 28px rgba(2,6,23,.45);padding:22px}
+    .card h3{margin-top:0}
+    .pill{display:inline-block;padding:6px 10px;border-radius:999px;background:rgba(45,108,223,.12);color:#bfdbfe;border:1px solid rgba(45,108,223,.35);font-size:12px}
+    .btn{display:inline-flex;align-items:center;gap:8px;padding:10px 16px;border-radius:999px;border:1px solid rgba(255,255,255,.12);background:#1f2937;color:#fff}
+    .btn:hover{transform:translateY(-1px)}
+    .list{list-style:none;padding:0;margin:0}
+    .list li{padding:10px 0;border-bottom:1px dashed #1f2937}
+    .posts a{display:block;padding:14px 16px;border:1px solid var(--border);border-radius:12px;background:rgba(255,255,255,.02)}
+    .grid-2{grid-column:span 8}
+    .grid-1{grid-column:span 4}
+    @media (max-width:900px){.grid-2,.grid-1{grid-column:span 12}}
+    footer{margin-top:42px;border-top:1px solid var(--border);padding:18px 0;color:var(--muted)}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container nav">
+      <div class="logo">Bùi Dương Tín – <span>Blog Lập Trình Mạng</span></div>
+      <nav>
+        <a href="index.html">Home</a>
+        <a href="blog.html">Blog</a>
+        <a href="#posts">Bài viết</a>
+        <a href="#contact">Liên hệ</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="container">
+      <h1>Đồ án: Phát triển trang Blog cá nhân chia sẻ về lập trình mạng</h1>
+      <p>Sinh viên: <strong>Bùi Dương Tín</strong> – Khoa Công nghệ Thông tin, HUTECH – Năm 4, CN Công nghệ Phần mềm</p>
+      <div style="margin-top:18px;display:flex;gap:10px;flex-wrap:wrap">
+        <a class="btn" href="index.html"><i class="fa-solid fa-house"></i> Vào Website</a>
+        <a class="btn" href="blog.html"><i class="fa-solid fa-blog"></i> Xem mục Blog</a>
+        <a class="btn" href="#posts"><i class="fa-solid fa-list"></i> Danh sách 9 bài viết</a>
+      </div>
+    </div>
+  </section>
+
+  <main class="container" style="padding:28px 0">
+    <div class="grid">
+      <section class="card grid-2">
+        <h3>1) Thông tin cá nhân & Liên hệ</h3>
+        <ul class="list">
+          <li><strong>Họ và tên:</strong> Bùi Dương Tín</li>
+          <li><strong>Trường:</strong> Đại học Công nghệ TP. Hồ Chí Minh (HUTECH)</li>
+          <li><strong>Chuyên ngành:</strong> Công nghệ Phần mềm – Năm 4</li>
+          <li id="contact"><strong>Liên hệ:</strong>
+            <a href="https://www.facebook.com/" target="_blank" rel="noopener">Facebook</a> ·
+            <a href="https://github.com/" target="_blank" rel="noopener">GitHub</a> ·
+            <a href="mailto:tinbui.koks@gmail.com">Gmail</a>
+          </li>
+        </ul>
+      </section>
+
+      <section class="card grid-1">
+        <h3>2) Mục tiêu đồ án</h3>
+        <p>Xây dựng blog cá nhân hiện đại, responsive, chia sẻ các kiến thức về Java/JavaScript và lập trình mạng, có tối ưu SEO cơ bản.</p>
+        <span class="pill">SEO cơ bản</span> <span class="pill">Responsive</span> <span class="pill">GitHub Pages</span>
+      </section>
+
+      <section class="card grid-2">
+        <h3>3) Yêu cầu – Đáp ứng</h3>
+        <ul class="list">
+          <li>Menu: Home, Blog (đã có – xem thanh điều hướng)</li>
+          <li>Trang Home: giới thiệu + liên kết mạng xã hội (đã có trong <a href="index.html">index.html</a>)</li>
+          <li>Trang Blog: danh sách ≥ 9 bài viết (đã có trong <a href="blog.html">blog.html</a>)</li>
+          <li>Mỗi bài: tiêu đề, ngày đăng, nội dung, tags, hình minh họa (đã thiết kế trong 9 post)</li>
+          <li>Công nghệ: HTML/CSS/JS, triển khai <strong>GitHub Pages</strong></li>
+          <li>Thiết kế: hiện đại, hover/animation, responsive (có thể bật <em>theme</em> nâng cấp nếu cần)</li>
+          <li>SEO: meta title/description/keywords ở trang này và các trang chính</li>
+        </ul>
+      </section>
+
+      <section class="card grid-1">
+        <h3>4) Triển khai</h3>
+        <p>Repo: <a href="https://github.com/BuiDuongTin/BuiDuongTin-2280603198-Blogcanhan" target="_blank" rel="noopener">BuiDuongTin-2280603198-Blogcanhan</a></p>
+        <p>Hosting: <strong>GitHub Pages</strong></p>
+        <p>Domain: buiduongtin.github.io/BuiDuongTin-2280603198-Blogcanhan/</p>
+      </section>
+
+      <section class="card grid-2" id="posts">
+        <h3>5) Danh sách 9 bài viết (đã có sẵn nội dung)</h3>
+        <div class="posts" style="display:grid;grid-template-columns:repeat(1,1fr);gap:10px">
+          <a href="posts/post-1.html">1. Lập trình Socket với Java - Từ cơ bản đến nâng cao</a>
+          <a href="posts/post-2.html">2. Lập trình bất đồng bộ trong JavaScript với Promise và Async/Await</a>
+          <a href="posts/post-3.html">3. Xây dựng RESTful API với Spring Boot</a>
+          <a href="posts/post-4.html">4. Lập trình đa luồng trong Java và ứng dụng trong mạng</a>
+          <a href="posts/post-5.html">5. Tạo ứng dụng real-time với WebSocket và Node.js</a>
+          <a href="posts/post-6.html">6. Hiểu sâu về Java Collections Framework và hiệu suất</a>
+          <a href="posts/post-7.html">7. So sánh các framework JavaScript: React, Vue và Angular</a>
+          <a href="posts/post-8.html">8. Bảo mật trong ứng dụng Java và lập trình mạng</a>
+          <a href="posts/post-9.html">9. Tối ưu hóa hiệu suất JavaScript trong ứng dụng web</a>
+        </div>
+      </section>
+
+      <section class="card grid-1">
+        <h3>6) Hướng phát triển</h3>
+        <ul class="list">
+          <li>Tùy chọn nâng cấp UI: Dark mode, thanh tiến độ đọc, back-to-top</li>
+          <li>Nâng cấp SEO: sitemap.xml, OpenGraph, schema.org</li>
+          <li>SSG (Astro/Next.js) để tái sử dụng nội dung – triển khai version 2</li>
+        </ul>
+      </section>
+    </div>
+  </main>
+
+  <footer>
+    <div class="container" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px">
+      <span>© 2025 Bùi Dương Tín. All rights reserved.</span>
+      <div>
+        <a href="index.html">Home</a> · <a href="blog.html">Blog</a>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
