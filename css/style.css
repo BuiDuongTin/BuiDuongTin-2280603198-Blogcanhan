@@ -339,7 +339,8 @@ section {
 
 .post-card {
     background-color: white;
-    border-radius: 10px;
+    border: 1px solid var(--border-color); /* thêm viền nhẹ để tách khỏi khung */
+    border-radius: 14px;                   /* bo góc mềm hơn */
     overflow: hidden;
     box-shadow: var(--shadow);
     transition: var(--transition);
@@ -384,7 +385,7 @@ section {
 }
 
 .post-content {
-    padding: 20px;
+    padding: 20px; /* đệm trong để chữ không dính viền */
     flex: 1;
     display: flex;
     flex-direction: column;
@@ -925,3 +926,279 @@ footer {
 .post-card:nth-child(7) { animation-delay: 0.7s; }
 .post-card:nth-child(8) { animation-delay: 0.8s; }
 .post-card:nth-child(9) { animation-delay: 0.9s; }
+/* Thêm animations vào cuối file CSS */
+
+/* Hero Animation */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInRight {
+    from {
+        opacity: 0;
+        transform: translateX(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-20px);
+    }
+}
+
+/* Apply animations */
+.hero-text h1 {
+    animation: fadeInUp 0.8s ease-out;
+}
+
+.hero-text h2 {
+    animation: fadeInUp 0.8s ease-out 0.2s backwards;
+}
+
+.hero-text p {
+    animation: fadeInUp 0.8s ease-out 0.4s backwards;
+}
+
+.hero-buttons {
+    animation: fadeInUp 0.8s ease-out 0.6s backwards;
+}
+
+.hero-image {
+    animation: fadeInRight 1s ease-out 0.3s backwards;
+}
+
+.hero-image img {
+    animation: float 3s ease-in-out infinite;
+}
+
+/* Card Hover Effects */
+.post-card {
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    position: relative;
+    overflow: hidden;
+}
+
+.post-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+    transition: left 0.5s;
+}
+
+.post-card:hover::before {
+    left: 100%;
+}
+
+.post-card:hover {
+    transform: translateY(-10px) scale(1.02);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+}
+
+.post-card img {
+    transition: transform 0.5s ease;
+}
+
+.post-card:hover img {
+    transform: scale(1.1) rotate(2deg);
+}
+
+.post-category {
+    transition: all 0.3s ease;
+}
+
+.post-card:hover .post-category {
+    transform: scale(1.1);
+    box-shadow: 0 5px 15px rgba(0, 123, 255, 0.4);
+}
+
+/* Button Effects */
+.btn {
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.btn::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+.btn:hover::before {
+    width: 300px;
+    height: 300px;
+}
+
+.btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Social Icons Animation */
+.social a {
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.social a::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 50%;
+    width: 0;
+    height: 2px;
+    background: currentColor;
+    transform: translateX(-50%);
+    transition: width 0.3s ease;
+}
+
+.social a:hover::after {
+    width: 100%;
+}
+
+.social a:hover {
+    transform: translateY(-5px) scale(1.1);
+    color: #007bff;
+}
+
+/* Skills Animation */
+.skills ul li {
+    transition: all 0.3s ease;
+    position: relative;
+    padding-left: 25px;
+}
+
+.skills ul li::before {
+    content: '▶';
+    position: absolute;
+    left: 0;
+    color: #007bff;
+    transition: all 0.3s ease;
+}
+
+.skills ul li:hover {
+    transform: translateX(10px);
+    color: #007bff;
+}
+
+.skills ul li:hover::before {
+    transform: scale(1.5);
+}
+
+/* Section Header Animation */
+.section-header h2 {
+    position: relative;
+    display: inline-block;
+}
+
+.underline {
+    height: 4px;
+    width: 60px;
+    background: linear-gradient(90deg, #007bff, #00d4ff);
+    margin: 20px auto;
+    border-radius: 2px;
+    position: relative;
+    overflow: hidden;
+}
+
+.underline::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.5);
+    animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+    0% {
+        left: -100%;
+    }
+    100% {
+        left: 100%;
+    }
+}
+
+/* Newsletter Animation */
+.newsletter-form input,
+.newsletter-form button {
+    transition: all 0.3s ease;
+}
+
+.newsletter-form input:focus {
+    transform: scale(1.02);
+    box-shadow: 0 5px 15px rgba(0, 123, 255, 0.3);
+}
+
+/* Read More Link Animation */
+.read-more {
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.read-more i {
+    transition: transform 0.3s ease;
+}
+
+.read-more:hover i {
+    transform: translateX(5px);
+}
+
+.read-more:hover {
+    gap: 10px;
+}
+
+/* Scroll Animation */
+.fade-in {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.8s ease;
+}
+
+.fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Loading Animation */
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.5;
+    }
+}
+
+.loading {
+    animation: pulse 1.5s ease-in-out infinite;
+}
